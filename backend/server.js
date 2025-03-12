@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
+const session = require('express-session');
 
 // Load environment
 dotenv.config();
@@ -14,14 +15,33 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+// Session Middleware
+app.use(session ({
+    secret: 'secret-key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+}));
+
+// Set up EJS as the templating engine
+app.set('view engine', 'ejs');
+app.set('views', './views');
+
 // Connect to MongoDB
 connectDB();
 
 // Routes
+app.use('/api/user', require('./routes/userRoutes'));
 app.use('/api/news', require('./routes/newsRoutes'));
+app.use('/api/user-data', require('./routes/userDataRoutes'));
+
+// Render the index page
+app.get('/', (req, res) => {
+    res.render('index', { username: 'Harshiv Bharat Patel'});
+});
 
 // Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log('Server is running on port ${PORT}');
+    console.log(`Server is running on port ${PORT}`);
 });
