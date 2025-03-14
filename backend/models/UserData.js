@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 const userDataSchema = new mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    bookmarks: [{ type: String }],
-    preferences: { type: Object, default: {}},
-    createdAt: { type: Date, default: Date.now },
+  userId: { type: String, required: true, unique: true }, // Change to String
+  bookmarks: [{ type: String, default: [] }],
+  preferences: { type: Object, default: {} },
+  createdAt: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model('UserData', userDataSchema);

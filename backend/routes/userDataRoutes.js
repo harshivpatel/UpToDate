@@ -15,12 +15,16 @@ router.post('/add', async (req, res) => {
 });
 
 // Get Data
-router.get('/UserId', async(req, res) => {
+router.get('/UserId/:userId', async (req, res) => {
     try {
         const userData = await UserData.findOne({ userId: req.params.userId });
+        if(!userData) {
+            return res.status(404).json({ error : 'User data not found' });
+        }
         res.status(200).json(userData);
-    } catch (err) {
-        res.status(500).json({ error: 'Failed to fetch data' });
+    } catch (err) { 
+        console.error('Error fetching data:', err);
+        res.status(500).json({ error: 'Failed to fetch data' , details: err.message});
     }
 });
 
@@ -28,11 +32,14 @@ router.get('/UserId', async(req, res) => {
 router.put('/update/:userId', async (req, res) => {
     try {
         const { bookmarks, preferences } = req.body;
-        await UserData.findOneAndUpdate(
+        const updateData = await UserData.findOneAndUpdate(
             { userId: req.params.userId },
             { bookmarks, preferences },
             { new: true }
         );
+        if(!updateData) {
+            return res.status(404).json({ error : ' User data not found '})
+        }
         res.status(200).json({ message: 'Data updated successfully' });
     } catch (err) {
         res.status(500).json({ error: 'Failed to update data' });
@@ -42,11 +49,15 @@ router.put('/update/:userId', async (req, res) => {
 // Delete data
 router.delete('/delete/:userId', async (req, res) => {
     try {
-        await userData.findOneAndDelete({ userId: req.params.userId });
-        res.status(200).json({ message: 'Data deleted successfully' });
+      const deletedData = await UserData.findOneAndDelete({ userId: req.params.userId });
+      if (!deletedData) {
+        return res.status(404).json({ error: 'User data not found' });
+      }
+      res.status(200).json({ message: 'Data deleted successfully', data: deletedData });
     } catch (err) {
-        res.status(500).json({ error: 'Failed to delete data' });
+      console.error('Error deleting data:', err); // Log the error
+      res.status(500).json({ error: 'Failed to delete data', details: err.message });
     }
-});
+  });;
 
 module.exports = router;
