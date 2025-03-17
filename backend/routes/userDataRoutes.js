@@ -17,14 +17,20 @@ router.post('/add', async (req, res) => {
 // Get Data
 router.get('/UserId/:userId', async (req, res) => {
     try {
-        const userData = await UserData.findOne({ userId: req.params.userId });
+        const { userId } = req.params;
+
+        if(!userId || typeof userId !== 'string') {
+            return res.status(400).json({ error: 'Invalid userId' });
+        }
+        const userData = await UserData.findOne({ userId });
+
         if(!userData) {
-            return res.status(404).json({ error : 'User data not found' });
+            return res.status(404).json({ error: 'User data not found' });
         }
         res.status(200).json(userData);
-    } catch (err) { 
-        console.error('Error fetching data:', err);
-        res.status(500).json({ error: 'Failed to fetch data' , details: err.message});
+    } catch (err) {
+        console.error('Erro fetching data:', err);
+        res.status(500).json({ error: 'Failed to fetch data', details: err.message });
     }
 });
 

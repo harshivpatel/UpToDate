@@ -1,0 +1,12 @@
+GET http://localhost:5000/UserId/2367d87fd66cf3928ae8639a911
+
+###
+
+POST http://localhost:5000/api/users/register
+Content-Type: application/json
+
+{
+    "userName": "sundeep",
+    "email": "sundeep@example.com",
+    "password": "kloip"
+}

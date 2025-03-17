@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 
 const userDataSchema = new mongoose.Schema({
-  userId: { type: String, required: true, unique: true },
-  bookmarks: [{ type: String, default: [] }],
-  preferences: { type: Object, default: {} },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
+  bookmarks: [{ type: [String], default: [] }],
+  preferences: { 
+    theme : { type: String, default: 'light' },
+    language: { type: String, default: 'en' }
+   },
   createdAt: { type: Date, default: Date.now }
 });
 

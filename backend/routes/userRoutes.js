@@ -6,12 +6,25 @@ const bcrypt = require('bcrypt');
 // Register a new User
 router.post('/register', async (req, res) => {
     try {
+
+        console.log("Incoming request body:", req.body);
+        
         const { userName, email, password } = req.body;
 
+        if(!userName ||  !email || !password) {
+            return res.status(400).json({ error: 'All fields (username, email & password) are required' });
+        }
+
         const existingUser = await User.findOne({ email });
-        if(existingUser) {
+        if (existingUser) {
             return res.status(400).json({ error: 'User already exists' });
         }
+
+        const existingEmail = await User.findOne({ email });
+        if (existingEmail) {
+            return res.status(400).json({ error: 'Email already exists' });
+        }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = new User( { userName, email, password : hashedPassword });
