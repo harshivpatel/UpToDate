@@ -31,9 +31,9 @@ app.set('views', './views');
 connectDB();
 
 // Routes
-app.use('/api/user', require('./routes/userRoutes'));
-app.use('/api/news', require('./routes/newsRoutes'));
-app.use('/api/user-data', require('./routes/userDataRoutes'));
+app.use('/api/users', require('./routes/userRoutes')); // User routes (registration, login, etc.)
+app.use('/api/user-data', require('./routes/userDataRoutes')); // UserData routes (bookmarks, preferences, etc.)
+app.use('/api/news', require('./routes/newsRoutes')); // News routes
 
 // Render the index page
 app.get('/', (req, res) => {
