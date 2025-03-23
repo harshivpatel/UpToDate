@@ -1,20 +1,26 @@
+### Add a new User
 POST http://localhost:5000/api/users/register
 Content-Type: application/json
 
 {
-    "userName": "ram",
-    "email": "ram@gmail.com",
+    "userName": "harshiv",
+    "email": "harshiv@gmail.com",
     "password": "1234"
 }
-###
+### Login the existing User
 POST http://localhost:5000/api/users/login
 Content-Type: application/json
 
 {
-    "email": "ram@gmail.com",
+    "email": "harshiv@gmail.com",
     "password": "1234"
 }
-###
+
+### Delete the existing the User
+DELETE http://localhost:5000/api/users/delete/bharat
+
+
+### Add the User Data
 POST http://localhost:5000/api/user-data/add
 Content-Type: application/json
 
@@ -24,10 +30,10 @@ Content-Type: application/json
     "preferences": {"theme": "light", "language": "hin"}
 }
 
-###
+### Get the User Data
 GET http://localhost:5000/api/user-data/userId/67df45e4a890c0560ddd8a78
 
-###
+### Update the User Data
 PUT http://localhost:5000/api/user-data/update/67df45e4a890c0560ddd8a78
 Content-Type: application/json
 
@@ -38,9 +44,6 @@ Content-Type: application/json
         "language": "fr"
     }
 }
-###
-DELETE http://localhost:5000/api/user-data/delete/67df45e4a890c0560ddd8a78
-
-
-
+### Delete the User Data
+DELETE http://localhost:5000/api/user-data/delete
 

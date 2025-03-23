@@ -8,27 +8,24 @@ router.post('/register', async (req, res) => {
     try {
         const { userName, email, password } = req.body;
 
-        // Ensure that all fields are provided
         if (!userName || !email || !password) {
             return res.status(400).json({ error: 'All fields (username, email & password) are required' });
         }
 
-        // Trim the password to avoid extra spaces causing issues
         const trimmedPassword = password.trim();
 
-        // Check if the user already exists
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ error: 'User already exists' });
         }
 
-        // Create a new user instance with the raw (unhashed) password
-        const user = new User({ userName, email, password: trimmedPassword });
+        const hashedPassword = await bcrypt.hash(trimmedPassword, 10);
+        console.log('Hashed Password:', hashedPassword);
+        
+        const user = new User({ userName, email, password: hashedPassword });
 
-        // Save the user (password will be hashed in the pre-save hook)
         await user.save();
 
-        // Respond with a success message
         res.status(201).json({ message: 'User registered successfully', user });
     } catch (err) {
         console.error('Error registering the user:', err);
@@ -48,17 +45,41 @@ router.post('/login', async (req, res) => {
 
         const user = await User.findOne({ email });
         if(!user) {
-            return res.status(404).json({ error: 'User not found' });
+            return res.status(404).json({ error: 'User not found with this Email' });
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if(!isPasswordValid) {
-            return res.status(401).json({ error:'Invalid password'});
+            return res.status(401).json({ error:'Wrong password'});
         }
+
         res.status(200).json({ message: 'Login successfully', user });
     } catch (err) {
         console.log('Error during login:', err);
         res.status(500).json({ error: 'Login failed', details: err.message });
+    }
+});
+
+
+// Delete a user
+router.delete('/delete/:userName', async (req, res) => {
+    try {
+        const { userName } = req.params;
+
+        if (!userName) {
+            return res.status(400).json({ error: 'Username is required to delete your account'})
+        }
+
+        const deletedUser = await User.findOneAndDelete({ userName });
+
+        if (!deletedUser) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        res.status(200).json({ message: 'User deleted successfully', deletedUser });
+    } catch (err) {
+        console.error('Error deleting the user', err);
+        res.status(500).json({ error: 'Failed to delete user', details: err.message });
     }
 });
 
