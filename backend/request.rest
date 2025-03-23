@@ -1,12 +1,46 @@
-GET http://localhost:5000/UserId/2367d87fd66cf3928ae8639a911
-
-###
-
 POST http://localhost:5000/api/users/register
 Content-Type: application/json
 
 {
-    "userName": "sundeep",
-    "email": "sundeep@example.com",
-    "password": "kloip"
+    "userName": "ram",
+    "email": "ram@gmail.com",
+    "password": "1234"
 }
+###
+POST http://localhost:5000/api/users/login
+Content-Type: application/json
+
+{
+    "email": "ram@gmail.com",
+    "password": "1234"
+}
+###
+POST http://localhost:5000/api/user-data/add
+Content-Type: application/json
+
+{
+    "userId": "67df45e4a890c0560ddd8a78",
+    "bookmarks": ["C1", "D3"],
+    "preferences": {"theme": "light", "language": "hin"}
+}
+
+###
+GET http://localhost:5000/api/user-data/userId/67df45e4a890c0560ddd8a78
+
+###
+PUT http://localhost:5000/api/user-data/update/67df45e4a890c0560ddd8a78
+Content-Type: application/json
+
+{
+    "bookmarks": ["abc", "new-bookmark"],
+    "preferences": {
+        "theme": "light",
+        "language": "fr"
+    }
+}
+###
+DELETE http://localhost:5000/api/user-data/delete/67df45e4a890c0560ddd8a78
+
+
+
+

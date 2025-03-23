@@ -37,7 +37,7 @@ app.use('/api/news', require('./routes/newsRoutes')); // News routes
 
 // Render the index page
 app.get('/', (req, res) => {
-    res.render('index', { username: 'Harshiv Bharat Patel'});
+    res.render('index', { username: 'Virat Kohli'});
 });
 
 // Start the server
