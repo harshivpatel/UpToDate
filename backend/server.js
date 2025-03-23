@@ -1,12 +1,13 @@
+require('dotenv').config({ path: './.env' });
+
+console.log('JWT_SECRET:', process.env.JWT_SECRET);
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const session = require('express-session');
 
-// Load environment
-dotenv.config();
 
 // Create an Express app
 const app = express();

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 // Register a new User
 router.post('/register', async (req, res) => {
@@ -20,7 +21,6 @@ router.post('/register', async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(trimmedPassword, 10);
-        console.log('Hashed Password:', hashedPassword);
         
         const user = new User({ userName, email, password: hashedPassword });
 
@@ -53,7 +53,14 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ error:'Wrong password'});
         }
 
-        res.status(200).json({ message: 'Login successfully', user });
+        const token = jwt.sign(
+            { userId: user._id, email: user.email },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h'}
+        );
+        console.log("Generated Token: ", token);
+
+        res.status(200).json({ message: 'Login successfully', token });
     } catch (err) {
         console.log('Error during login:', err);
         res.status(500).json({ error: 'Login failed', details: err.message });
