@@ -3,21 +3,21 @@ POST http://localhost:5000/api/users/register
 Content-Type: application/json
 
 {
-    "userName": "harshiv",
-    "email": "harshiv@gmail.com",
-    "password": "1234"
+    "userName": "saadamgat",
+    "email": "adam@gmail.com",
+    "password": "456789"
 }
 ### Login the existing User
 POST http://localhost:5000/api/users/login
 Content-Type: application/json
 
 {
-    "email": "harshiv@gmail.com",
-    "password": "1234"
+    "email": "adam@gmail.com",
+    "password": "456789"
 }
 
-### Delete the existing the User
-DELETE http://localhost:5000/api/users/delete/bharat
+### Delete the existing the User through user<Name
+DELETE http://localhost:5000/api/users/delete/adam
 
 
 ### Add the User Data
@@ -25,25 +25,24 @@ POST http://localhost:5000/api/user-data/add
 Content-Type: application/json
 
 {
-    "userId": "67df45e4a890c0560ddd8a78",
-    "bookmarks": ["C1", "D3"],
-    "preferences": {"theme": "light", "language": "hin"}
+    "userId": "67e08e4a886dc054b7cd24d5",
+    "bookmarks": ["PL Score", "World News"],
+    "preferences": {"theme": "light", "language": "nep"}
 }
 
-### Get the User Data
-GET http://localhost:5000/api/user-data/userId/67df45e4a890c0560ddd8a78
-
-### Update the User Data
-PUT http://localhost:5000/api/user-data/update/67df45e4a890c0560ddd8a78
+### Get the User Data through userId
+GET http://localhost:5000/api/user-data/userId
+### Update the User Data through userId
+PUT http://localhost:5000/api/user-data/update
 Content-Type: application/json
 
 {
-    "bookmarks": ["abc", "new-bookmark"],
+    "bookmarks": ["wildfire in USA", "Protests"],
     "preferences": {
         "theme": "light",
         "language": "fr"
     }
 }
-### Delete the User Data
+### Delete the User Data through userId
 DELETE http://localhost:5000/api/user-data/delete
 
