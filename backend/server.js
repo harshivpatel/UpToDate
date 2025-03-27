@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const session = require('express-session');
+const path = require("path");
 
 
 // Create an Express app
@@ -35,8 +36,11 @@ app.use('/api/user-data', require('./routes/userDataRoutes')); // UserData route
 app.use('/api/news', require('./routes/newsRoutes')); // News routes
 
 // Render the index page
-app.get('/', (req, res) => {
-    res.render('index', { username: 'Virat Kohli'});
+// Serve static files from frontend folder
+app.use(express.static(path.join(__dirname, "../frontend")));
+
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend", "index.html"));
 });
 
 // Start the server
