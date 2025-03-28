@@ -2,20 +2,24 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const UserData = require('../models/UserData');
+const User = require('../models/User');
 
 // Add data
 router.post('/add', async (req, res) => {
     try {
-        const { userId, bookmarks, preferences } = req.body;
+        const { userName, bookmarks, preferences } = req.body;
 
-        if (!userId) {
-            return res.status(400).json({ error: 'User ID is required' });
+        if (!userName) {
+            return res.status(400).json({ error: 'Username is required' });
         }
-        if (!mongoose.Types.ObjectId.isValid(userId)) {
-            return res.status(400).json({ error: "Invalid userId format. Expected ObjectId." });
+        const user = await User.findOne({ userName });
+
+        if(!user) {
+            return res.status(404).json({ error: 'User not found' });
         }
         const userData = new UserData({ 
-            userId: new mongoose.Types.ObjectId(userId), 
+            userId: user._id,
+            userName, 
             bookmarks, 
             preferences });
         await userData.save();
@@ -29,9 +33,9 @@ router.post('/add', async (req, res) => {
 });
 
 // Get Data
-router.get('/userId/:userId', async (req, res) => {
+router.get('/userName/:userName', async (req, res) => {
     try {
-        const userData = await UserData.findOne({ userId: req.params.userId });
+        const userData = await UserData.findOne({ userName: req.params.userName });
 
         if (!userData) {
             return res.status(404).json({ error: 'User data not found' });
@@ -45,7 +49,7 @@ router.get('/userId/:userId', async (req, res) => {
 });
 
 // Update Data
-router.put('/update/:userId', async (req, res) => {
+router.put('/update/:userName', async (req, res) => {
     try {
         const { bookmarks, preferences } = req.body;
 
@@ -57,7 +61,7 @@ router.put('/update/:userId', async (req, res) => {
         if (preferences !== undefined) updateFields.preferences = preferences;
 
         const updateData = await UserData.findOneAndUpdate(
-            { userId: req.params.userId },
+            { userName: req.params.userName },
             { $set: updateFields },
             { new: true}
         );
@@ -72,9 +76,9 @@ router.put('/update/:userId', async (req, res) => {
 });
 
 // Delete data
-router.delete('/delete/:userId', async (req, res) => {
+router.delete('/delete/:userName', async (req, res) => {
     try {
-      const deletedData = await UserData.findOneAndDelete({ userId: req.params.userId });
+      const deletedData = await UserData.findOneAndDelete({ userName: req.params.userName });
 
       if (!deletedData) {
         return res.status(404).json({ error: 'User data not found' });

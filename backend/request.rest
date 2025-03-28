@@ -3,37 +3,39 @@ POST http://localhost:5000/api/users/register
 Content-Type: application/json
 
 {
-    "userName": "pranav",
-    "email": "rishi@gmail.com",
-    "password": "raj"
+    "userName": "jimmy",
+    "email": "jimmy@gmail.com",
+    "password": "jimmy"
 }
 ### Login the existing User
 POST http://localhost:5000/api/users/login
 Content-Type: application/json
 
 {
-    "email": "adam@gmail.com",
-    "password": "456789"
+    "email": "jimmy@gmail.com",
+    "password": "jimmy"
 }
 
-### Delete the existing the User through user<Name
-DELETE http://localhost:5000/api/users/delete/adam
+### Delete the existing the User through userName
+DELETE http://localhost:5000/api/users/delete/jimmy
 
-
-### Add the User Data
-POST http://localhost:5000/api/user-data/add
+### Add method to add user data using userName
+POST http://localhost:5000/api/userdatas/add
 Content-Type: application/json
 
 {
-    "userId": "67e08e4a886dc054b7cd24d5",
+    "userName": "jimmy",
     "bookmarks": ["PL Score", "World News"],
-    "preferences": {"theme": "light", "language": "nep"}
+    "preferences": {
+        "theme": "light",
+        "language": "nep"
+    }
 }
 
-### Get the User Data through userId
-GET http://localhost:5000/api/user-data/userId
-### Update the User Data through userId
-PUT http://localhost:5000/api/user-data/update
+### Get the User Data through userName
+GET http://localhost:5000/api/userdatas/jimmy
+### Update the User Data through userName
+PUT http://localhost:5000/api/user-data/update/67e671aa187bb4feffaa1eb4
 Content-Type: application/json
 
 {
@@ -43,6 +45,6 @@ Content-Type: application/json
         "language": "fr"
     }
 }
-### Delete the User Data through userId
-DELETE http://localhost:5000/api/user-data/delete
+### Delete the User Data through userName
+DELETE http://localhost:5000/api/user-data/delete/67e671aa187bb4feffaa1eb4
 
