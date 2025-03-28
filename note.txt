@@ -1,0 +1,17 @@
+1. Database:
+ a. Fix UserData issue in MongoDB terminal where we can't see the latest entry
+
+
+2. Finish with the backend this week:
+    a. Cookies 
+    b. Sessions
+    
+
+3. Start with frontend:
+    a. HTML, CSS, Javascript
+    b. Implement NewsAPI
+    c. Error Handling
+    d. Validation - For username and pass
+    e. Rendering the Bookmarks and preferences correctly
+    f. Search method
+    g. Filters for Sports, Weather & Tech
