@@ -33,9 +33,9 @@ Content-Type: application/json
 }
 
 ### Get the User Data through userName
-GET http://localhost:5000/api/userdatas/jimmy
+GET http://localhost:5000/api/userdatas/userName/jimmy
 ### Update the User Data through userName
-PUT http://localhost:5000/api/user-data/update/67e671aa187bb4feffaa1eb4
+PUT http://localhost:5000/api/userdatas/update/jimmy
 Content-Type: application/json
 
 {
@@ -46,5 +46,5 @@ Content-Type: application/json
     }
 }
 ### Delete the User Data through userName
-DELETE http://localhost:5000/api/user-data/delete/67e671aa187bb4feffaa1eb4
+DELETE http://localhost:5000/api/userdatas/delete/jimmy
 
