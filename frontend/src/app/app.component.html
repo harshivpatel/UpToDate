@@ -1,13 +1,11 @@
-<h1>Latest news from Ireland</h1>
+<h1>{{ UpToDate }}</h1>
 
-<div *ngIf="newsArticles.length > 0; else loading">
-  <div *ngFor="let article of newsArticles" class = "news-card">
-    <h2>{{ articles.title }}</h2>
-    <p>{{ article.description }}</p>
-    <a [href]="article.url" target="_blank">Read more</a>
-  </div>
+<div *ngIf="newsArticles.length === 0">
+  <p>Loading news...</p>
 </div>
 
-<ng-template #loading>
-  <p>Loading news...</p>
-</ng-template>
+<div *ngFor="let article of newsArticles" class="news-article">
+  <h2>{{ article.title }}</h2>
+  <p>{{ article.description }}</p>
+  <a [href]="article.url" target="_blank">Read more</a>
+</div>

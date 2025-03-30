@@ -1,15 +1,15 @@
 require('dotenv').config({ path: './.env' });
 
 const express = require('express');
+const axios = require('axios');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const connectDB = require('./config/db');
-const userRoutes = require('./routes/userDataRoutes');
 const session = require('express-session');
-
 
 // Create an Express app
 const app = express();
+const router = express.Router();
 
 // Middleware
 app.use(cors());
