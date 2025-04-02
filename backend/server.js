@@ -1,12 +1,11 @@
+require('dotenv').config({ path: './.env' });
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const dotenv = require('dotenv');
-const connectDB = require('./config/db');
+const connectDB = require('./config/db.js');
 const session = require('express-session');
 
-// Load environment
-dotenv.config();
 
 // Create an Express app
 const app = express();
@@ -37,7 +36,7 @@ app.use('/api/news', require('./routes/newsRoutes')); // News routes
 
 // Render the index page
 app.get('/', (req, res) => {
-    res.render('index', { username: 'Harshiv Bharat Patel'});
+    res.render('index', { username: 'Virat Kohli'});
 });
 
 // Start the server

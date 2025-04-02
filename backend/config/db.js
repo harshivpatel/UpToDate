@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 // MongoDB connection URI
-const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017';
+const uri = process.env.MONGODB_URI || 'mongodb://localhost:5000';
 
 // Database name
 const dbName = 'UpToDate';
