@@ -1,11 +1,53 @@
-<h1>{{ UpToDate }}</h1>
 
-<div *ngIf="newsArticles.length === 0">
-  <p>Loading news...</p>
-</div>
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand"><b>UpToDate</b></a>
+    <form class="d-flex" role="search">
+      <input class="form-control me-2" type="search" placeholder="Search..." aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">
+        <i class="bi bi-search"></i>
+      </button>
+    </form>
+    <a class="nav-link active ms-3" href="#">Sign In</a>
+  </div>
+</nav>
 
-<div *ngFor="let article of newsArticles" class="news-article">
-  <h2>{{ article.title }}</h2>
-  <p>{{ article.description }}</p>
-  <a [href]="article.url" target="_blank">Read more</a>
+<div class="container-fluid mt-3">
+  <div class="d-flex justify-content-between">
+
+    <div class="sidebar">
+      <ul class="nav flex-column">
+        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Sports</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Weather</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Tech</a></li>
+      </ul>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="main-content">
+      <h3 class="mb-3">Top Headlines</h3>
+      <div *ngIf="newsArticles.length === 0">
+        <p>Loading news...</p>
+      </div>
+      <div *ngFor="let article of newsArticles" class="mb-4 p-3 border rounded">
+        <h5>{{ article.title }}</h5>
+        <p>{{ article.description }}</p>
+        <a [href]="article.url" target="_blank" class="btn btn-sm btn-primary">Read More</a>
+      </div>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="sidebar">
+      <ul class="nav flex-column">
+        <li class="nav-item"><a class="nav-link" href="#">Saved Stories</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Trending</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">My Account</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+      </ul>
+    </div>
+
+  </div>
 </div>

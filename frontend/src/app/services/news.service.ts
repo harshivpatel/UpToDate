@@ -6,11 +6,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class NewsService {
-  private backendUrl = 'http://localhost:5000/api/news';
-
-  constructor(private http: HttpClient) {}
+  
+  constructor(private http: HttpClient) { }
 
   getNews(): Observable<any> {
-    return this.http.get<any>(this.backendUrl);
+    return this.http.get<any>('http://localhost:5000/api/news')
   }
 }

@@ -1,0 +1,17 @@
+.news-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.news-card {
+    width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 2px 2 px 10 px rgba(0, 0, 0, 0.1);
+}
+.news-img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}

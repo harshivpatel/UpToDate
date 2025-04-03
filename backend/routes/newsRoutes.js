@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
             return res.status(500).json({ error: 'Missing API Key' });
         }
 
-        const url = `https://newsapi.org/v2/top-headlines?sources=cnn&apiKey=${apiKey}`;
+        const url = `https://newsapi.org/v2/top-headlines?sources=rte&apiKey=${apiKey}`;
         console.log("Fetching news from:", url);
 
         const response = await axios.get(url);
