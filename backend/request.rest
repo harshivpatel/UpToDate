@@ -3,21 +3,21 @@ POST http://localhost:5000/api/users/register
 Content-Type: application/json
 
 {
-    "userName": "harshiv",
-    "email": "harshiv@gmail.com",
-    "password": "1234"
+    "userName": "abhi",
+    "email": "abhi@gmail.com",
+    "password": "Hero@?223" 
 }
 ### Login the existing User
 POST http://localhost:5000/api/users/login
 Content-Type: application/json
 
 {
-    "email": "harshiv@gmail.com",
-    "password": "1234"
+    "email": "abhi@gmail.com",
+    "password": "Hero223"
 }
 
 ### Delete the existing the User
-DELETE http://localhost:5000/api/users/delete/bharat
+DELETE http://localhost:5000/api/users/delete/adam
 
 
 ### Add the User Data
