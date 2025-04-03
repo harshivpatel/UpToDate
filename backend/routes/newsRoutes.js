@@ -6,18 +6,18 @@ router.get('/', async (req, res) => {
     try {
         const apiKey = process.env.NEWS_API_KEY;
 
-        if(!apiKey) {
+        if (!apiKey) {
             return res.status(500).json({ error: 'Missing API Key' });
         }
 
-        const url = `https://newsapi.org/v2/top-headlines?sources=the-times-of-india&apiKey=${apiKey}`;
-        // console.log("Fetching news from:", url);
+        const url = `https://newsapi.org/v2/top-headlines?sources=cnn&apiKey=${apiKey}`;
+        console.log("Fetching news from:", url);
 
         const response = await axios.get(url);
         res.json(response.data);
 
     } catch (error) {
-        console.log('Error fetching the news:', error);
+        console.error('❌ Error fetching the news:', error.message);
         res.status(500).json({ error: 'Failed to fetch news' });
     }
 });
