@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { registerValidation, loginValidation } = require("../middleware/UserValidations");
 
-// Register a new User
+/// Register a new User
 router.post("/register", async (req, res) => {
     // Validate request data
     const { error } = registerValidation(req.body);
@@ -20,10 +20,13 @@ router.post("/register", async (req, res) => {
             return res.status(400).json({ error: "User already exists" });
         }
 
-        // Hash password before saving
+        // **Hash password after validation**
         const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create new user with hashed password
         const user = new User({ userName, email, password: hashedPassword });
 
+        // Save the user to the database
         await user.save();
         res.status(201).json({ message: "User registered successfully", user });
     } catch (err) {
