@@ -4,6 +4,7 @@ UpToDate is created using Node.js for backend and Angular for frontend. MongoDB 
 
 ## Installation Instructions
 
+
 Open 2 Terminals
 Terminal 1 --> mongosh
 Terminal 2 -> mongod
@@ -19,8 +20,5 @@ ng serve --open
 
 
 
-MONGODB_URI=mongodb://localhost:27017
-JWT_SECRET=123456789
-PORT:5000
 
 ~ Harshiv Patel, Saugat Pokharel & Abhishek Das.
