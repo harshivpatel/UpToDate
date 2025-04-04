@@ -1,4 +1,4 @@
-
+<!-- Navbar -->
 <nav class="navbar bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand"><b>UpToDate</b></a>
@@ -12,34 +12,76 @@
   </div>
 </nav>
 
+<!-- Main Layout -->
 <div class="container-fluid mt-3">
   <div class="d-flex justify-content-between">
 
-    <div class="sidebar">
-      <ul class="nav flex-column">
-        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Sports</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Weather</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Tech</a></li>
-      </ul>
-    </div>
+    <!-- Left Sidebar -->
+<div class="sidebar">
+  <ul class="nav flex-column">
 
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#categoryMenu" role="button" aria-expanded="false" aria-controls="categoryMenu">
+        Categories <i class="bi bi-caret-down-fill"></i>
+      </a>
+      <div class="collapse" id="categoryMenu">
+        <ul class="nav flex-column ms-3">
+          <li class="nav-item"><a class="nav-link" href="#" (click)="fetchNewsByCategory('general')">General</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" (click)="fetchNewsByCategory('sports')">Sports</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" (click)="fetchNewsByCategory('technology')">Technology</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" (click)="fetchNewsByCategory('health')">Health</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" (click)="fetchNewsByCategory('science')">Science</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" (click)="fetchNewsByCategory('business')">Business</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" (click)="fetchNewsByCategory('entertainment')">Entertainment</a></li>
+        </ul>
+      </div>
+    </li>
+
+  </ul>
+</div>
+
+
+    <!-- Left Separator -->
     <div class="separator"></div>
 
+    <!-- Main Content Area -->
     <div class="main-content">
       <h3 class="mb-3">Top Headlines</h3>
+
       <div *ngIf="newsArticles.length === 0">
         <p>Loading news...</p>
       </div>
-      <div *ngFor="let article of newsArticles" class="mb-4 p-3 border rounded">
+
+      <div *ngFor="let article of newsArticles" class="mb-4 p-3 border rounded shadow-sm">
         <h5>{{ article.title }}</h5>
+
+        <img *ngIf="article.urlToImage" [src]="article.urlToImage" class="img-fluid rounded mb-2" alt="news image" />
+
         <p>{{ article.description }}</p>
-        <a [href]="article.url" target="_blank" class="btn btn-sm btn-primary">Read More</a>
+        <a [href]="article.url" target="_blank" class="btn btn-sm btn-primary me-2">Read More</a>
+
+        <!-- Bookmark Button -->
+        <button class="btn btn-sm btn-outline-warning me-2" (click)="toggleBookmark(article)">
+          <i class="bi bi-bookmark"></i> Bookmark
+        </button>
+
+        <!-- Share Buttons -->
+        <button class="btn btn-sm btn-outline-secondary me-1" (click)="shareLink('whatsapp', article.url)">
+          <i class="bi bi-whatsapp"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-secondary me-1" (click)="shareLink('facebook', article.url)">
+          <i class="bi bi-facebook"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-secondary" (click)="copyToClipboard(article.url)">
+          <i class="bi bi-link-45deg"></i>
+        </button>
       </div>
     </div>
 
+    <!-- Right Separator -->
     <div class="separator"></div>
 
+    <!-- Right Sidebar -->
     <div class="sidebar">
       <ul class="nav flex-column">
         <li class="nav-item"><a class="nav-link" href="#">Saved Stories</a></li>
@@ -51,3 +93,26 @@
 
   </div>
 </div>
+
+<!-- Styling -->
+<style>
+  .sidebar {
+    width: 200px;
+    padding: 15px;
+  }
+  .separator {
+    border-left: 2px solid #ccc;
+    height: 100vh;
+  }
+  .main-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .nav-link {
+    color: black !important;
+    font-weight: bold;
+  }
+  .nav-link:hover {
+    color: #007bff !important;
+  }
+</style>

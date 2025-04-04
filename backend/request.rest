@@ -3,47 +3,74 @@ POST http://localhost:5000/api/users/register
 Content-Type: application/json
 
 {
-    "userName": "ball",
-    "email": "ball@gmail.com",
-    "password": "Ball@1233" 
+  "userName": "ball",
+  "email": "ball@gmail.com",
+  "password": "Ball@1233"
 }
+
 ### Login the existing User
 POST http://localhost:5000/api/users/login
 Content-Type: application/json
 
 {
-    "email": "ball@gmail.com",
-    "password": "Ball@1233"
+  "email": "ball@gmail.com",
+  "password": "Ball@1233"
 }
 
-### Delete the existing the User
-DELETE http://localhost:5000/api/users/delete/adam
+### Delete the existing User
+DELETE http://localhost:5000/api/users/delete/ball
+# Assuming `:userName` is the identifier in your delete route
 
+---
 
 ### Add the User Data
-POST http://localhost:5000/api/user-data/add
+POST http://localhost:5000/api/userdatas/add
 Content-Type: application/json
 
 {
-    "userId": "67df45e4a890c0560ddd8a78",
-    "bookmarks": ["C1", "D3"],
-    "preferences": {"theme": "light", "language": "hin"}
+  "userName": "ball",
+  "bookmarks": ["C1", "D3"],
+  "preferences": {
+    "theme": "light",
+    "language": "hin"
+  }
 }
 
 ### Get the User Data
-GET http://localhost:5000/api/user-data/userId/67df45e4a890c0560ddd8a78
+GET http://localhost:5000/api/userdatas/userName/ball
 
 ### Update the User Data
-PUT http://localhost:5000/api/user-data/update/67df45e4a890c0560ddd8a78
+PUT http://localhost:5000/api/userdatas/update/ball
 Content-Type: application/json
 
 {
-    "bookmarks": ["abc", "new-bookmark"],
-    "preferences": {
-        "theme": "light",
-        "language": "fr"
-    }
+  "bookmarks": ["abc", "new-bookmark"],
+  "preferences": {
+    "theme": "light",
+    "language": "fr"
+  }
 }
-### Delete the User Data
-DELETE http://localhost:5000/api/user-data/delete
 
+### Delete the User Data
+DELETE http://localhost:5000/api/userdatas/delete/ball
+
+---
+
+### Add a new Bookmark
+POST http://localhost:5000/api/userdatas/bookmark
+Content-Type: application/json
+
+{
+  "userName": "ball",
+  "article": {
+    "title": "Example Article",
+    "description": "A great article about something interesting.",
+    "url": "https://example.com/article-link",
+    "urlToImage": "https://example.com/image.jpg",
+    "publishedAt": "2025-04-04T12:00:00Z",
+    "source": {
+      "id": null,
+      "name": "Example News"
+    }
+  }
+}

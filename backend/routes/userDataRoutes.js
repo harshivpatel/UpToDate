@@ -91,4 +91,59 @@ router.delete('/delete/:userName', async (req, res) => {
     }
   });
 
+  // Add bookmark
+router.post('/bookmark', async (req, res) => {
+    const { userName, article } = req.body;
+  
+    if (!userName || !article) {
+      return res.status(400).json({ error: 'User name and article are required' });
+    }
+  
+    try {
+      const userData = await UserData.findOne({ userName });
+  
+      if (!userData) {
+        return res.status(404).json({ error: 'User Data not found' });
+      }
+  
+      const alreadyExists = userData.bookmarks.some(b => b.url === article.url);
+  
+      if (!alreadyExists) {
+        userData.bookmarks.push(article);
+        await userData.save();
+      }
+  
+      res.status(200).json({ message: 'Bookmark added', bookmarks: userData.bookmarks });
+    } catch (err) {
+      console.error('Error saving the bookmark:', err);
+      res.status(500).json({ error: 'Server error while bookmarking' });
+    }
+  });
+
+  // Remove bookmark
+router.post('/remove-bookmark', async (req, res) => {
+    const { userName, article } = req.body;
+  
+    if (!userName || !article) {
+      return res.status(400).json({ error: 'User name and article are required' });
+    }
+  
+    try {
+      const userData = await UserData.findOne({ userName });
+  
+      if (!userData) {
+        return res.status(404).json({ error: 'User data not found' });
+      }
+  
+      userData.bookmarks = userData.bookmarks.filter(item => item.url !== article.url);
+      await userData.save();
+  
+      res.status(200).json({ message: 'Bookmark removed', bookmarks: userData.bookmarks });
+    } catch (err) {
+      console.error('Error removing the bookmark:', err);
+      res.status(500).json({ error: 'Server error while removing the bookmark' });
+    }
+  });
+  
+
 module.exports = router;
