@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UpToDate News Aggregator</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand"><img src="assets/logo.png" alt="Logo of UpToDate" width="90" height="90"></a>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search..." aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">
+          <i class="bi bi-search"></i>
+        </button>
+      </form>
+      <a class="nav-link active ms-3" href="#">Sign In</a>
+    </div>
+  </nav>
+
+  <!-- Main Layout -->
+  <div class="container-fluid mt-3">
+    <div class="d-flex justify-content-between">
+      
+      <!-- Left Sidebar -->
+      <div class="sidebar">
+        <ul class="nav flex-column">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Sports</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Weather</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Tech</a></li>
+        </ul>
+      </div>
+
+      <!-- Left Separator Line -->
+      <div class="separator"></div>
+
+      <!-- Middle Content Area -->
+      <div class="main-content d-flex justify-content-center">
+        <div class="p-4 shadow-sm rounded border mt-5" style="max-width: 450px; width: 100%; max-height:300px; background-color: #ffffff;">
+          <h2 class="mb-2 text-center" style="font-family: 'Courier New', Courier, monospace;">Become <strong>UpToDate</strong></h2>
+          <p class="mb-4 text-center" style="font-style: italic;">Sign up your account</p>
+      
+          <form>
+            <div class="mb-3">
+              <label for="email" class="form-label visually-hidden">Email address</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+                <input type="email" class="form-control" id="email" placeholder="Enter your e-mail">
+              </div>
+            </div>
+      
+            <div class="mb-3">
+              <label for="password" class="form-label visually-hidden">Password</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                <input type="password" class="form-control" id="password" placeholder="Enter your password">
+              </div>
+            </div>
+      
+            <div class="mt-4 text-center">
+              <p>Already have an account? <a href="#" id="login">Log In</a></p>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+        <!-- Right Separator Line -->
+        <div class="separator"></div>
+
+        <!-- Right Sidebar -->
+         <div class="sidebar">
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link" href="#">Saved Stories</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Trending</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">My Account</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+            </ul>
+        </div>
+   
+
+</body>
+
+<style>
+  .sidebar {
+    width: 200px; /* Fixed width for left container */
+    padding: 15px;
+  }
+  .separator {
+    border-left: 2px solid #ccc; /* Vertical line separator */
+    height: 100vh; /* Full height */
+  }
+
+  .main-content {
+      max-width: 800px; /* Control main content width */
+      margin: 0 auto; /* Ensure equal spacing on both sides */
+    }
+
+  .nav-link {
+      color: black !important; /* Force black text */
+      font-weight: bold;
+    }
+    .nav-link:hover {
+      color: #007bff !important; /* Optional: Change color on hover */
+    }
+
+    #login {
+      color: black !important; /* Force black text */
+      font-weight: bold;
+    }
+
+    #login:hover {
+      color: #007bff !important; /* Optional: Change color on hover */
+    }
+
+</style>
+</html>
