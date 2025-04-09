@@ -6,8 +6,8 @@ const userSchema = new mongoose.Schema({
         type: String, 
         required: [true, "Username is required"], 
         unique: true, 
-        minlength: [3, "Username must be at least 3 characters"], 
-        maxlength: [12, "Username must not exceed 12 characters"]
+        minlength: [8, "Username must be at least 8 characters"], 
+        maxlength: [20, "Username must not exceed 20 characters"]
     },
     email: { 
         type: String, 
@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
             "Password must have at least one uppercase letter, one lowercase letter, and one number"
         ]
     },
-createdAt: { type: Date, default: Date.now },
+        createdAt: { type: Date, default: Date.now },
 });
 
 // Method to compare hashed passwords

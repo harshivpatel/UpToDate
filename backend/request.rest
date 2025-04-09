@@ -3,9 +3,9 @@ POST http://localhost:5000/api/users/register
 Content-Type: application/json
 
 {
-    "userName": "abhi",
-    "email": "abhi@gmail.com",
-    "password": "Hero@?223" 
+    "userName": "gesnbt",
+    "email": "asdvfbdsf@gmail.com",
+    "password": "Srhfb544" 
 }
 ### Login the existing User
 POST http://localhost:5000/api/users/login
