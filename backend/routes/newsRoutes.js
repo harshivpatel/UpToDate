@@ -6,14 +6,22 @@ router.get('/', async (req, res) => {
   try {
     const apiKey = process.env.NEWS_API_KEY;
     const category = req.query.category || 'general';
+    const query = req.query.q || '';
 
     if (!apiKey) {
       return res.status(500).json({ error: 'Missing API Key' });
     }
 
-    const url = `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${apiKey}`;
-    console.log("🔄 Fetching news from:", url);
+    let url;
 
+    if (query) {
+      url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&apiKey=${apiKey}`;
+      
+    } else {
+      url = `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${apiKey}`;
+    }
+
+    console.log("🔄 Fetching news from:", url);
     const response = await axios.get(url);
     res.json(response.data);
 
