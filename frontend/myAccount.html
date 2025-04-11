@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UpToDate News Aggregator</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand"><img src="assets/logo.png" alt="Logo of UpToDate" width="90" height="90"></a>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search..." aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">
+          <i class="bi bi-search"></i>
+        </button>
+      </form>
+      <a class="nav-link active ms-3" href="signIn.html">Sign In</a>
+    </div>
+  </nav>
+
+  <!-- Main Layout -->
+  <div class="container-fluid mt-3">
+    <div class="d-flex justify-content-between">
+      
+      <!-- Left Sidebar -->
+      <div class="sidebar">
+        <ul class="nav flex-column">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Sports</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Weather</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Tech</a></li>
+        </ul>
+      </div>
+
+      <!-- Left Separator Line -->
+      <div class="separator"></div>
+
+      <!-- Middle Content Area -->
+        <div class="main-content">
+            <div class="mb-4">
+            <h4>Change Password</h4>
+            <form>
+                <div class="mb-3">
+                <input type="email" class="form-control" placeholder="Enter your email">
+                </div>
+                <div class="mb-3">
+                <input type="password" class="form-control" placeholder="Current Password">
+                </div>
+                <div class="mb-3">
+                <input type="password" class="form-control" placeholder="New Password">
+                </div>
+                <button type="submit" class="btn btn-outline-primary">Confirm</button>
+            </form>
+            </div>
+        
+            <hr>
+        
+            <div>
+            <h4>Change Theme</h4>
+            <div class="d-flex align-items-center gap-3">
+                <div>
+                <i class="bi bi-moon-fill" style="font-size: 1.5rem;"></i>
+                <button class="btn btn-outline-dark ms-2">Dark Mode</button>
+                </div>
+                <div>
+                <i class="bi bi-brightness-high-fill" style="font-size: 1.5rem;"></i>
+                <button class="btn btn-outline-secondary ms-2">Light Mode</button>
+                </div>
+            </div>
+            </div>
+        </div>
+  
+
+      <!-- Right Separator Line -->
+      <div class="separator"></div>
+
+      <!-- Right Sidebar -->
+      <div class="sidebar">
+        <ul class="nav flex-column">
+          <li class="nav-item"><a class="nav-link" href="#">Saved Stories</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Trending</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">My Account</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+
+<style>
+  .sidebar {
+    width: 200px; /* Fixed width for left container */
+    padding: 15px;
+  }
+  .separator {
+    border-left: 2px solid #ccc; /* Vertical line separator */
+    height: 100vh; /* Full height */
+  }
+
+  .main-content {
+      max-width: 800px; /* Control main content width */
+      margin: 0 auto; /* Ensure equal spacing on both sides */
+      padding: 20px;
+    }
+
+  .nav-link {
+      color: black !important; /* Force black text */
+      font-weight: bold;
+    }
+    .nav-link:hover {
+      color: #007bff !important; /* Optional: Change color on hover */
+    }
+</style>
+</html>
