@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UpToDate News Aggregator</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center"><img src="assets/logo.png" alt="Logo of UpToDate" style="max-height: 60px; height: auto; width: auto;"></a>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search..." aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">
+          <i class="bi bi-search"></i>
+        </button>
+      </form>
+      <a class="nav-link active ms-3" href="signIn.html">Sign In</a>
+    </div>
+  </nav>
+
+  <!-- Main Layout -->
+  <div class="container-fluid mt-3">
+    <div class="d-flex justify-content-between">
+      
+      <!-- Left Sidebar -->
+      <div class="sidebar">
+        <ul class="nav flex-column">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Sports</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Weather</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Tech</a></li>
+        </ul>
+      </div>
+
+      <!-- Left Separator Line -->
+      <div class="separator"></div>
+
+      <!-- Middle Content Area -->
+      <div class="main-content">
+        <h3>Saved Stories</h3>
+        <p>Saved stories by users will appear here.</p>
+      </div>
+
+      <!-- Right Separator Line -->
+      <div class="separator"></div>
+
+      <!-- Right Sidebar -->
+      <div class="sidebar">
+        <ul class="nav flex-column">
+          <li class="nav-item"><a class="nav-link" href="saved.html">Saved Stories</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Trending</a></li>
+          <li class="nav-item"><a class="nav-link" href="myAccount.html">My Account</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+
+<style>
+  .sidebar {
+    width: 200px; /* Fixed width for left container */
+    padding: 15px;
+  }
+  .separator {
+    border-left: 2px solid #ccc; /* Vertical line separator */
+    height: 100vh; /* Full height */
+  }
+
+  .main-content {
+      max-width: 800px; /* Control main content width */
+      margin: 0 auto; /* Ensure equal spacing on both sides */
+    }
+
+  .nav-link {
+      color: black !important; /* Force black text */
+      font-weight: bold;
+    }
+    .nav-link:hover {
+      color: #007bff !important; /* Optional: Change color on hover */
+    }
+</style>
+</html>
