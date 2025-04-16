@@ -1,1 +1,108 @@
-/* You can add global styles to this file, and also import other style files */
+.sidebar {
+  width: 200px;
+  padding: 15px;
+  user-select: none;
+}
+
+.separator {
+  border-left: 2px solid #ccc;
+  height: auto;
+  align-self: stretch;
+}
+
+.main-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.nav-link {
+  color: black !important;
+  font-weight: bold;
+}
+.nav-link:hover {
+  color: #007bff !important;
+}
+
+/* Dark mode styles */
+
+/* ========== DARK THEME SUPPORT ========== */
+body.dark-theme {
+  background-color: #121212;
+  color: #f5f5f5;
+}
+
+/* Sidebar background */
+body.dark-theme .sidebar {
+  background-color: #1f1f1f;
+  border-right: 1px solid #333;
+}
+
+/* Separator lines */
+body.dark-theme .separator {
+  border-left: 2px solid #444;
+}
+
+/* NavBar & top bar */
+body.dark-theme .navbar {
+  background-color: #1c1c1c !important;
+  color: #f0f0f0 !important;
+}
+
+/* Search input fix */
+body.dark-theme input[type="search"],
+body.dark-theme input,
+body.dark-theme textarea,
+body.dark-theme select {
+  background-color: #2a2a2a;
+  color: #ffffff;
+  border: 1px solid #444;
+}
+
+/* Fix "Register / Sign In" and nav links */
+body.dark-theme .nav-link {
+  color: #f0f0f0 !important;
+}
+
+/* News card fix */
+body.dark-theme .bg-light {
+  background-color: #2a2a2a !important;
+  color: #e0e0e0 !important;
+}
+
+/* Headings & Buttons */
+body.dark-theme h3,
+body.dark-theme h4,
+body.dark-theme h5 {
+  color: #f0f0f0;
+}
+
+body.dark-theme .btn {
+  color: #fff;
+  border-color: #555;
+}
+
+body.dark-theme .btn-outline-secondary {
+  color: #ccc;
+  border-color: #555;
+}
+
+body.dark-theme .btn-outline-secondary:hover {
+  background-color: #444;
+  color: #fff;
+}
+.navbar-brand img {
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+body.dark-theme .navbar .navbar-brand span {
+  color: #ffffff !important;
+}
+body,
+.navbar .navbar-brand span {
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+.navbar-brand:hover img {
+  transform: scale(1.05);
+}
+

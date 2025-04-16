@@ -1,0 +1,60 @@
+<div class="d-flex flex-column min-vh-100">
+
+  <div class="flex-grow-1 d-flex">
+
+    <!-- Left Sidebar -->
+    <div class="sidebar d-flex flex-column">
+      <ul class="nav flex-column">
+        <li class="nav-item"><a class="nav-link" href="#">General</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Sports</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Technology</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Health</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Science</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Business</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Entertainment</a></li>
+      </ul>
+    </div>
+
+    <!-- Left Separator -->
+    <div class="separator"></div>
+
+    <!-- Main Content Area -->
+    <div class="main-content flex-grow-1 px-4 py-3">
+      <h4>Change Password</h4>
+      <form class="mb-4">
+        <div class="mb-3"><input type="email" class="form-control" placeholder="Enter your email" /></div>
+        <div class="mb-3"><input type="password" class="form-control" placeholder="Current Password" /></div>
+        <div class="mb-3"><input type="password" class="form-control" placeholder="New Password" /></div>
+        <button class="btn btn-outline-primary" type="submit">Confirm</button>
+      </form>
+
+      <hr>
+
+      <h4>Change Theme</h4>
+      <div class="d-flex align-items-center gap-3">
+        <div>
+          <i class="bi bi-moon-fill" style="font-size: 1.5rem;"></i>
+          <button class="btn btn-outline-dark ms-2" (click)="setDarkMode()">Dark Mode</button>
+        </div>
+        <div>
+          <i class="bi bi-brightness-high-fill" style="font-size: 1.5rem;"></i>
+          <button class="btn btn-outline-secondary ms-2" (click)="setLightMode()">Light Mode</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Separator -->
+    <div class="separator"></div>
+
+    <!-- Right Sidebar -->
+    <div class="sidebar d-flex flex-column">
+      <ul class="nav flex-column">
+        <li class="nav-item"><a class="nav-link" href="#">Saved Stories</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Trending</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="'/my-account'">My Account</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>

@@ -1,143 +1,20 @@
-<!-- Main Wrapper -->
 <div class="d-flex flex-column min-vh-100">
-
-<!-- Navbar -->
-<!-- Navbar -->
-<nav class="navbar bg-body-tertiary px-4">
-  <a class="navbar-brand"><b>UpToDate</b></a>
-
-  <!-- 💡 ngModel binds input to searchQuery -->
-  <form class="d-flex mx-auto" (ngSubmit)="searchNews(searchQuery)">
-    <input
-      [(ngModel)]="searchQuery"
-      name="search"
-      class="form-control me-2"
-      type="search"
-      placeholder="Search..."
-      aria-label="Search"
-      required
-    />
-    <button class="btn btn-outline-success" type="submit">
-      <i class="bi bi-search"></i>
-    </button>
-  </form>
-
-  <a class="nav-link active" href="#">Sign In</a>
-</nav>
-
-
-  <!-- Main Layout -->
-  <div class="flex-grow-1 d-flex">
-
-    <!-- Left Sidebar -->
-    <div class="sidebar d-flex flex-column">
-      <ul class="nav flex-column">
-
-        <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="collapse" href="#categoryMenu" role="button" aria-expanded="false" aria-controls="categoryMenu">
-            Categories <i class="bi bi-caret-down-fill"></i>
+    <!-- Global Navbar -->
+    <nav class="navbar bg-body-tertiary px-4">
+        <a class="navbar-brand d-flex align-items-center gap-2" [routerLink]="'/'" style="cursor: pointer;">
+            <!-- <img src="assets/logo.jpg" alt="UpToDate Logo" height="40" style="border-radius: 4px;" /> -->
+            <span class="fs-4 fw-bold text-dark">UpToDate</span>
           </a>
-          <div class="collapse show" id="categoryMenu">
-            <ul class="nav flex-column ms-3">
-              <li class="nav-item"><a class="nav-link" href="#" (click)="fetchNewsByCategory('general')">General</a></li>
-              <li class="nav-item"><a class="nav-link" href="#" (click)="fetchNewsByCategory('sports')">Sports</a></li>
-              <li class="nav-item"><a class="nav-link" href="#" (click)="fetchNewsByCategory('technology')">Technology</a></li>
-              <li class="nav-item"><a class="nav-link" href="#" (click)="fetchNewsByCategory('health')">Health</a></li>
-              <li class="nav-item"><a class="nav-link" href="#" (click)="fetchNewsByCategory('science')">Science</a></li>
-              <li class="nav-item"><a class="nav-link" href="#" (click)="fetchNewsByCategory('business')">Business</a></li>
-              <li class="nav-item"><a class="nav-link" href="#" (click)="fetchNewsByCategory('entertainment')">Entertainment</a></li>
-            </ul>
-          </div>
-        </li>
-
-      </ul>
-    </div>
-
-    <!-- Left Separator -->
-    <div class="separator"></div>
-
-    <!-- Main Content Area -->
-    <div class="main-content flex-grow-1 px-4 py-3">
-      <h3 class="mb-3">Top Headlines</h3>
-
-      <div *ngIf="newsArticles.length === 0">
-        <p>Loading news...</p>
-      </div>
-
-      <div *ngFor="let article of newsArticles" class="mb-4 p-3 border rounded shadow-sm bg-light">
-        <h5>{{ article.title }}</h5>
-        <img *ngIf="article.urlToImage" [src]="article.urlToImage" class="img-fluid rounded mb-2" alt="news image" />
-        <p>{{ article.description }}</p>
-
-        <a [href]="article.url" target="_blank" class="btn btn-sm btn-primary me-2">Read More</a>
-
-        <button class="btn btn-sm btn-outline-warning me-2" (click)="toggleBookmark(article)">
-          <i class="bi bi-bookmark"></i> Bookmark
-        </button>
-
-        <button class="btn btn-sm btn-outline-secondary me-1" (click)="shareLink('whatsapp', article.url)">
-          <i class="bi bi-whatsapp"></i>
-        </button>
-        <button class="btn btn-sm btn-outline-secondary me-1" (click)="shareLink('facebook', article.url)">
-          <i class="bi bi-facebook"></i>
-        </button>
-        <button class="btn btn-sm btn-outline-secondary" (click)="copyToClipboard(article.url)">
-          <i class="bi bi-link-45deg"></i>
-        </button>
-      </div>
-    </div>
-
-    <!-- Right Separator -->
-    <div class="separator"></div>
-
-    <!-- Right Sidebar -->
-    <div class="sidebar d-flex flex-column">
-      <ul class="nav flex-column">
-        <li class="nav-item"><a class="nav-link" href="#">Saved Stories</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Trending</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">My Account</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
-      </ul>
-    </div>
-
+        <form class="d-flex mx-auto" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search..." aria-label="Search" />
+          <button class="btn btn-outline-success" type="submit">
+            <i class="bi bi-search"></i>
+          </button>
+        </form>
+      
+        <a class="nav-link active ms-3 fw-semibold" [routerLink]="'/login'">Register / Sign In</a>
+      </nav>      
+  
+    <!-- Page Content -->
+    <router-outlet></router-outlet>
   </div>
-</div>
-
-<!-- Styling -->
-<style>
-  html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
-  .container-fluid {
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-}
-
-  .sidebar {
-    width: 200px;
-    padding: 15px;
-  }
-
-  .separator {
-  border-left: 2px solid #ccc;
-  height: auto;
-  align-self: stretch;
-}
-
-  .main-content {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .nav-link {
-    color: black !important;
-    font-weight: bold;
-  }
-
-  .nav-link:hover {
-    color: #007bff !important;
-  }
-</style>
