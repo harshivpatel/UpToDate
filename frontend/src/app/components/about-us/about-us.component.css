@@ -1,0 +1,20 @@
+.about-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    color: #000;
+  }
+  
+  body.dark-theme .about-container {
+    background-color: #1f1f1f;
+    color: #f0f0f0;
+  }
+  
+  h2, h4 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .faq-item p {
+    margin-left: 15px;
+  }
+  
