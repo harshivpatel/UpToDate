@@ -1,7 +1,5 @@
 <div class="d-flex flex-column min-vh-100">
 
-  <!-- Navbar -->
-
   <!-- Layout -->
   <div class="flex-grow-1 d-flex">
 
@@ -21,57 +19,60 @@
     <!-- Left Separator -->
     <div class="separator"></div>
 
-    <!-- Middle Form Area -->
-    <div class="main-content d-flex justify-content-center align-items-start flex-grow-1 pt-5">
-      <div class="p-4 shadow-sm rounded border" style="max-width: 450px; width: 100%; background-color: #ffffff;">
-        <h2 class="mb-2 text-center" style="font-family: 'Courier New', Courier, monospace;">
-          {{ isLoginMode ? 'Welcome Back to' : 'Become' }} <strong>UpToDate</strong>
-        </h2>
-        <p class="mb-4 text-center" style="font-style: italic;">
-          {{ isLoginMode ? 'Sign in to your account' : 'Sign up your account' }}
-        </p>
+<!-- Middle Form Area -->
+<div class="main-content d-flex justify-content-center align-items-start flex-grow-1 pt-5">
+  <div class="p-4 shadow-sm rounded border theme-box" style="max-width: 450px; width: 100%;">
+    <h2 class="mb-2 text-center" style="font-family: 'Courier New', Courier, monospace;">
+      {{ isLoginMode ? 'Welcome Back to' : 'Become' }} <strong>UpToDate</strong>
+    </h2>
 
-        <form (ngSubmit)="onSubmit()">
-          <!-- Show username only in register mode -->
-          <div class="mb-3" *ngIf="!isLoginMode">
-            <label for="username" class="form-label visually-hidden">Username</label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
-              <input type="text" class="form-control" id="username" [(ngModel)]="userName" name="username" placeholder="Enter your username" />
-            </div>
-          </div>
+    <p class="mb-4 text-center text-muted" style="font-style: italic;">
+      {{ isLoginMode ? 'Sign in to your account' : 'Sign up your account' }}
+    </p>
 
-          <div class="mb-3">
-            <label for="email" class="form-label visually-hidden">Email address</label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
-              <input type="email" class="form-control" id="email" [(ngModel)]="email" name="email" placeholder="Enter your e-mail" required />
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label for="password" class="form-label visually-hidden">Password</label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-              <input type="password" class="form-control" id="password" [(ngModel)]="password" name="password" placeholder="Enter your password" required />
-            </div>
-          </div>
-
-          <button class="btn btn-success w-100" type="submit">
-            {{ isLoginMode ? 'Log In' : 'Confirm' }}
-          </button>
-
-          <div class="mt-4 text-center">
-            <p>
-              {{ isLoginMode ? "Don't have an account?" : "Already have an account?" }}
-              <a href="#" id="toggleMode" (click)="toggleMode(); $event.preventDefault()">
-                {{ isLoginMode ? 'Register' : 'Log In' }}
-              </a>
-            </p>
-          </div>
-        </form>
+    <form (ngSubmit)="onSubmit()">
+      <!-- Username Field -->
+      <div class="mb-3" *ngIf="!isLoginMode">
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+          <input type="text" class="form-control" [(ngModel)]="userName"
+            name="username" placeholder="Enter your username" />
+        </div>
       </div>
-    </div>
+
+      <!-- Email Field -->
+      <div class="mb-3">
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+          <input type="email" class="form-control" [(ngModel)]="email"
+            name="email" placeholder="Enter your e-mail" required />
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="mb-3">
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+          <input type="password" class="form-control" [(ngModel)]="password"
+            name="password" placeholder="Enter your password" required />
+        </div>
+      </div>
+
+      <button class="btn btn-success w-100" type="submit">
+        {{ isLoginMode ? 'Log In' : 'Register' }}
+      </button>
+
+      <div class="mt-4 text-center">
+        <p>
+          {{ isLoginMode ? "Don't have an account?" : "Already have an account?" }}
+          <a href="#" (click)="toggleMode(); $event.preventDefault()">
+            {{ isLoginMode ? 'Register' : 'Log In' }}
+          </a>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
 
     <!-- Right Separator -->
     <div class="separator"></div>
@@ -81,7 +82,7 @@
       <ul class="nav flex-column">
         <li class="nav-item"><a class="nav-link" href="#">Saved Stories</a></li>
         <li class="nav-item"><a class="nav-link" href="#">Trending</a></li>
-        <li class="nav-item"><a class="nav-link" [routerLink]="'/my-account'">My Account</a>
+        <li class="nav-item"><a class="nav-link" [routerLink]="'/my-account'">My Account</a></li>
         <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
       </ul>
     </div>

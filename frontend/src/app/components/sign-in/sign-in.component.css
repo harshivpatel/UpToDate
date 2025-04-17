@@ -1,0 +1,14 @@
+/* Light mode default */
+.form-control {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #ccc;
+  }
+  
+  /* Dark mode override */
+  body.dark-theme .form-control {
+    background-color: #2a2a2a;
+    color: #fff;
+    border: 1px solid #444;
+  }
+  
