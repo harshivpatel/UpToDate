@@ -1,78 +1,77 @@
-<div class="d-flex flex-column min-vh-100">
-
+<main class="d-flex flex-column min-vh-100">
   <!-- Layout -->
   <div class="flex-grow-1 d-flex">
 
     <!-- Left Sidebar -->
     <div class="sidebar d-flex flex-column">
       <ul class="nav flex-column">
-        <li class="nav-item"><a class="nav-link" href="#">General</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Sports</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Technology</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Health</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Science</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Business</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Entertainment</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="'/category/general'">General</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="'/category/sports'">Sports</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="'/category/technology'">Technology</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="'/category/health'">Health</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="'/category/science'">Science</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="'/category/business'">Business</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="'/category/entertainment'">Entertainment</a></li>
       </ul>
     </div>
 
     <!-- Left Separator -->
     <div class="separator"></div>
 
-<!-- Middle Form Area -->
-<div class="main-content d-flex justify-content-center align-items-start flex-grow-1 pt-5">
-  <div class="p-4 shadow-sm rounded border theme-box" style="max-width: 450px; width: 100%;">
-    <h2 class="mb-2 text-center" style="font-family: 'Courier New', Courier, monospace;">
-      {{ isLoginMode ? 'Welcome Back to' : 'Become' }} <strong>UpToDate</strong>
-    </h2>
+    <!-- Middle Form Area -->
+    <div class="main-content d-flex justify-content-center align-items-start flex-grow-1 pt-5">
+      <div class="p-4 shadow-sm rounded border theme-box" style="max-width: 450px; width: 100%;">
+        <h2 class="mb-2 text-center" style="font-family: 'Courier New', Courier, monospace;">
+          {{ isLoginMode ? 'Welcome Back to' : 'Become' }} <strong>UpToDate</strong>
+        </h2>
 
-    <p class="mb-4 text-center text-muted" style="font-style: italic;">
-      {{ isLoginMode ? 'Sign in to your account' : 'Sign up your account' }}
-    </p>
-
-    <form (ngSubmit)="onSubmit()">
-      <!-- Username Field -->
-      <div class="mb-3" *ngIf="!isLoginMode">
-        <div class="input-group">
-          <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
-          <input type="text" class="form-control" [(ngModel)]="userName"
-            name="username" placeholder="Enter your username" />
-        </div>
-      </div>
-
-      <!-- Email Field -->
-      <div class="mb-3">
-        <div class="input-group">
-          <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
-          <input type="email" class="form-control" [(ngModel)]="email"
-            name="email" placeholder="Enter your e-mail" required />
-        </div>
-      </div>
-
-      <!-- Password Field -->
-      <div class="mb-3">
-        <div class="input-group">
-          <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-          <input type="password" class="form-control" [(ngModel)]="password"
-            name="password" placeholder="Enter your password" required />
-        </div>
-      </div>
-
-      <button class="btn btn-success w-100" type="submit">
-        {{ isLoginMode ? 'Log In' : 'Register' }}
-      </button>
-
-      <div class="mt-4 text-center">
-        <p>
-          {{ isLoginMode ? "Don't have an account?" : "Already have an account?" }}
-          <a href="#" (click)="toggleMode(); $event.preventDefault()">
-            {{ isLoginMode ? 'Register' : 'Log In' }}
-          </a>
+        <p class="mb-4 text-center text-muted" style="font-style: italic;">
+          {{ isLoginMode ? 'Sign in to your account' : 'Sign up your account' }}
         </p>
+
+        <form (ngSubmit)="onSubmit()" autocomplete="off">
+          <!-- Username Field -->
+          <div class="mb-3" *ngIf="!isLoginMode">
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+              <input type="text" class="form-control" [(ngModel)]="userName"
+                name="username" placeholder="Enter your username" />
+            </div>
+          </div>
+
+          <!-- Email Field -->
+          <div class="mb-3">
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+              <input type="email" class="form-control" [(ngModel)]="email"
+                name="email" placeholder="Enter your e-mail" required />
+            </div>
+          </div>
+
+          <!-- Password Field -->
+          <div class="mb-3">
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+              <input type="password" class="form-control" [(ngModel)]="password"
+                name="password" placeholder="Enter your password" required />
+            </div>
+          </div>
+
+          <button class="btn btn-success w-100" type="submit">
+            {{ isLoginMode ? 'Log In' : 'Register' }}
+          </button>
+
+          <div class="mt-4 text-center">
+            <p>
+              {{ isLoginMode ? "Don't have an account?" : "Already have an account?" }}
+              <a href="#" (click)="toggleMode(); $event.preventDefault()">
+                {{ isLoginMode ? 'Register' : 'Log In' }}
+              </a>
+            </p>
+          </div>
+        </form>
       </div>
-    </form>
-  </div>
-</div>
+    </div>
 
     <!-- Right Separator -->
     <div class="separator"></div>
@@ -80,11 +79,11 @@
     <!-- Right Sidebar -->
     <div class="sidebar d-flex flex-column">
       <ul class="nav flex-column">
-        <li class="nav-item"><a class="nav-link" href="#">Saved Stories</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="'/saved-stories'">Saved Stories</a></li>
         <li class="nav-item"><a class="nav-link" [routerLink]="'/my-account'">My Account</a></li>
-        <li class="nav-item"><a class="nav-link" [routerLink]="'/about-us'">About Us</a>
+        <li class="nav-item"><a class="nav-link" [routerLink]="'/about-us'">About Us</a></li>
       </ul>
     </div>
 
   </div>
-</div>
+</main>

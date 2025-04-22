@@ -1,9 +1,10 @@
-/*BASE LAYOUT STYLES*/
+/* Global Fonts & Transition */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* ========== SIDEBAR ========== */
 .sidebar {
   width: 200px;
   padding: 15px;
@@ -11,7 +12,7 @@ body {
 }
 
 .separator {
-  border-left: 2px solid #ccc;  
+  border-left: 2px solid #ccc;
   height: auto;
   align-self: stretch;
 }
@@ -22,35 +23,27 @@ body {
   padding: 20px;
 }
 
+/* ========== LIGHT MODE ========== */
+
 /* Navbar */
 .navbar {
-  background-color: #f8f9fa;
-  color: #000;
+  background-color: #f8f9fa !important;
+  color: #000 !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.navbar-brand img {
-  border-radius: 8px;
-  transition: transform 0.3s ease;
-}
-
-.navbar-brand:hover img {
-  transform: scale(1.05);
-}
-
-.navbar .navbar-brand span {
-  transition: color 0.3s ease, background-color 0.3s ease;
-}
-
-/*NAV LINKS */
-.nav-link {
-  color: black !important;
+/* Navbar Brand & Links */
+.navbar .navbar-brand span,
+.navbar .nav-link {
+  color: #000 !important;
   font-weight: bold;
+  transition: color 0.3s ease;
 }
-.nav-link:hover {
+.navbar .nav-link:hover {
   color: #007bff !important;
 }
 
-/* LIGHT MODE FORM CONTROLS */
+/* Form Elements */
 input.form-control:focus,
 textarea.form-control,
 select.form-control {
@@ -59,82 +52,98 @@ select.form-control {
   border: 1px solid #ccc;
 }
 
-/*DARK MODE STYLES */
+/* News Cards */
+.news-card {
+  background-color: #ffffff;
+  color: #000000;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ========== DARK MODE ========== */
 body.dark-theme {
   background-color: #121212;
   color: #f5f5f5;
 }
 
-/* Navbar */
+/* Navbar Dark */
 body.dark-theme .navbar {
-  background-color: #1c1c1c !important;
-  color: #f0f0f0 !important;
+  background-color: #1f1f1f !important;
+  color: #f5f5f5 !important;
+}
+body.dark-theme .navbar .navbar-brand span,
+body.dark-theme .navbar .nav-link {
+  color: #f5f5f5 !important;
+}
+body.dark-theme .navbar .nav-link:hover {
+  color: #00bfff !important;
+}
+body.dark-theme .navbar .btn-outline-success {
+  color: #f5f5f5;
+  border-color: #666;
+}
+body.dark-theme .navbar .btn-outline-success:hover {
+  background-color: #333;
+}
+body.dark-theme .navbar input {
+  background-color: #2a2a2a;
+  color: #ffffff;
+  border: 1px solid #555;
 }
 
-body.dark-theme .navbar .navbar-brand span {
-  color: #ffffff !important;
-}
-
-/* Sidebar */
+/* Sidebar Dark */
 body.dark-theme .sidebar {
   background-color: #1f1f1f;
   border-right: 1px solid #333;
 }
-
-/* Separator lines */
 body.dark-theme .separator {
   border-left: 2px solid #444;
 }
-
-.theme-box {
-  background-color: #ffffff;
-  color: #000000;
+body.dark-theme .nav-link {
+  color: #f0f0f0;
 }
-body.dark-theme .theme-box {
-  background-color: #1e1e1e;
-  color: #f1f1f1;
+body.dark-theme .nav-link:hover {
+  color: #00bfff;
 }
 
-/* Search, Input fields, Select, Textarea */
-body.dark-theme input[type="search"],
+/* Form Elements Dark */
 body.dark-theme input,
 body.dark-theme textarea,
 body.dark-theme select {
   background-color: #2a2a2a;
-  color: #ffffff;
-  border: 1px solid #444;
+  color: #f0f0f0;
+  border: 1px solid #555;
 }
-
-/* Bootstrap form-control override */
 body.dark-theme .form-control {
   background-color: #2a2a2a;
   color: #ffffff;
   border: 1px solid #555;
 }
 
-body.dark-theme .nav-link {
-  color: #f0f0f0 !important;
-}
-body.dark-theme .nav-link:hover {
-  color: #00bfff !important;
+/* Placeholder text */
+body.dark-theme input::placeholder,
+body.dark-theme textarea::placeholder {
+  color: #cccccc;
 }
 
-
+/* Buttons */
 body.dark-theme .btn {
   color: #fff;
-  border-color: #555;
+  border-color: #666;
+  background-color: transparent;
 }
-
-body.dark-theme .btn-outline-secondary {
-  color: #ccc;
-  border-color: #555;
+body.dark-theme .btn:hover {
+  background-color: #333;
 }
-
+body.dark-theme .btn-outline-dark {
+  color: #eee;
+  border-color: #777;
+}
 body.dark-theme .btn-outline-secondary:hover {
   background-color: #444;
   color: #fff;
 }
 
+/* Headings */
 body.dark-theme h1,
 body.dark-theme h2,
 body.dark-theme h3,
@@ -144,17 +153,58 @@ body.dark-theme h6 {
   color: #f0f0f0;
 }
 
-body.dark-theme .bg-light {
-  background-color: #2a2a2a !important;
-  color: #e0e0e0 !important;
+/* News Cards Dark */
+body.dark-theme .news-card {
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+  border-color: #333;
+}
+body.dark-theme .news-card h5,
+body.dark-theme .news-card p {
+  color: #f0f0f0;
+}
+body.dark-theme .news-card .btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+body.dark-theme .news-card .btn-outline-secondary {
+  border-color: #888;
+  color: #ccc;
 }
 
-body,
-.navbar .navbar-brand span {
-  transition: color 0.3s ease, background-color 0.3s ease;
+/* Utility form box */
+.theme-box {
+  background-color: #ffffff;
+  color: #000000;
 }
-body:not(.dark-theme) .form-control {
-  background-color: #fff;
-  color: #000;
-  border: 1px solid #ccc;
+body.dark-theme .theme-box {
+  background-color: #1e1e1e;
+  color: #f1f1f1;
+}
+
+/* Fix outline buttons in dark mode */
+body.dark-theme .btn-outline-dark {
+  color: #f0f0f0 !important;
+  border-color: #888 !important;
+}
+body.dark-theme .btn-outline-dark:hover {
+  background-color: #333 !important;
+  border-color: #aaa !important;
+  color: #fff !important;
+}
+body.dark-theme .btn-outline-secondary {
+  color: #f0f0f0 !important;
+  border-color: #888 !important;
+}
+body.dark-theme .btn-outline-secondary:hover {
+  background-color: #444 !important;
+  color: #fff !important;
+}
+
+/* ✅ FINAL FIX for invisible placeholder in dark mode */
+body.dark-theme input::placeholder,
+body.dark-theme textarea::placeholder,
+body.dark-theme .form-control::placeholder {
+  color: #cccccc !important;
+  opacity: 1 !important;
 }

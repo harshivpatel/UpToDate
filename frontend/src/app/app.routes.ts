@@ -8,5 +8,9 @@ export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: SignInComponent },
   { path: 'my-account', component: MyAccountComponent },
-  { path: 'about-us', component: AboutUsComponent }
+  { path: 'about-us', component: AboutUsComponent },
+  {
+    path: 'search',
+    loadComponent: () => import('./components/search/search.component').then(m => m.SearchComponent)
+  }  
 ];

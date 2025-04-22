@@ -1,20 +1,68 @@
 <div class="d-flex flex-column min-vh-100">
-    <!-- Global Navbar -->
-    <nav class="navbar bg-body-tertiary px-4">
-        <a class="navbar-brand d-flex align-items-center gap-2" [routerLink]="'/'" style="cursor: pointer;">
-            <!-- <img src="assets/logo.jpg" alt="UpToDate Logo" height="40" style="border-radius: 4px;" /> -->
-            <span class="fs-4 fw-bold text-dark">UpToDate</span>
-          </a>
-        <form class="d-flex mx-auto" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search..." aria-label="Search" />
-          <button class="btn btn-outline-success" type="submit">
-            <i class="bi bi-search"></i>
-          </button>
-        </form>
-      
-        <a class="nav-link active ms-3 fw-semibold" [routerLink]="'/login'">Register / Sign In</a>
-      </nav>      
-  
-    <!-- Page Content -->
-    <router-outlet></router-outlet>
-  </div>
+  <!-- Global Navbar -->
+  <nav
+    class="navbar px-4"
+    [ngClass]="{ 'navbar-light bg-light': !isDarkMode, 'navbar-dark bg-dark': isDarkMode }"
+  >
+    <!-- Logo -->
+    <a [routerLink]="'/'" class="navbar-brand text-decoration-none">
+      <span class="site-title">UpToDate</span>
+    </a>  
+
+    <!-- Search Bar -->
+    <form class="d-flex mx-auto" role="search" (submit)="search($event)">
+      <input
+        [(ngModel)]="searchText"
+        name="q"
+        class="form-control me-2"
+        type="search"
+        placeholder="Search..."
+        aria-label="Search"
+        required
+      />
+      <button
+        class="btn"
+        [ngClass]="{
+          'btn-outline-dark': !isDarkMode,
+          'btn-outline-light': isDarkMode
+        }"
+        type="submit"
+      >
+        <i class="bi bi-search"></i>
+      </button>
+    </form>
+
+    <!-- Right Side: User Info or Login -->
+    <div class="d-flex align-items-center ms-auto">
+      <!-- Show username when logged in -->
+      <div *ngIf="isLoggedIn; else showLogin" class="dropdown">
+        <button
+          class="btn btn-sm dropdown-toggle"
+          [ngClass]="{ 'btn-outline-light': isDarkMode, 'btn-outline-dark': !isDarkMode }"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          {{ username }}
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
+        </ul>
+      </div>
+
+      <!-- Show login if not logged in -->
+      <ng-template #showLogin>
+        <a
+          class="nav-link fw-semibold"
+          [ngClass]="{ 'text-dark': !isDarkMode, 'text-light': isDarkMode }"
+          [routerLink]="'/login'"
+        >
+          Register / Sign In
+        </a>
+      </ng-template>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <router-outlet></router-outlet>
+</div>

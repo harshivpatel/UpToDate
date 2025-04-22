@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -16,30 +16,55 @@ export class SignInComponent {
   password: string = '';
   userName: string = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   toggleMode(): void {
     this.isLoginMode = !this.isLoginMode;
+    this.clearForm();
+  }
+
+  clearForm(): void {
+    this.email = '';
+    this.password = '';
+    this.userName = '';
   }
 
   onSubmit(): void {
+    if (!this.email || !this.password || (!this.isLoginMode && !this.userName)) {
+      alert('Please fill in all required fields.');
+      return;
+    }
+
     if (this.isLoginMode) {
-      this.authService.login({ email: this.email, password: this.password }).subscribe(
-        (res: any) => {
+      // Login
+      this.authService.login({ email: this.email, password: this.password }).subscribe({
+        next: (res: any) => {
           alert('Login successful');
           this.authService.setToken(res.token);
           this.authService.setUsername(res.userName);
+          this.router.navigate(['/']);
         },
-        (err) => alert('Login failed')
-      );
+        error: (err) => {
+          const msg = err.error?.error || 'Login failed';
+          alert(msg);
+        }
+      });
     } else {
-      this.authService.register({ userName: this.userName, email: this.email, password: this.password }).subscribe(
-        (res: any) => {
+      // Register
+      this.authService.register({
+        userName: this.userName,
+        email: this.email,
+        password: this.password
+      }).subscribe({
+        next: () => {
           alert('Registration successful. You can now log in.');
           this.toggleMode();
         },
-        (err) => alert('Registration failed')
-      );
+        error: (err) => {
+          const msg = err.error?.error || 'Registration failed';
+          alert(msg);
+        }
+      });
     }
   }
 }

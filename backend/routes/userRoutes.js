@@ -37,35 +37,42 @@ router.post('/register', async (req, res) => {
 // User login
 router.post('/login', async (req, res) => {
     try {
-        const { email, password } = req.body;
+      const { email, password } = req.body;
+  
+      if (!email || !password) {
+        return res.status(400).json({ error: 'Email and password are required' });
+      }
+  
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(404).json({ error: 'User not found with this Email' });
+      }
+  
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        return res.status(401).json({ error: 'Wrong password' });
+      }
 
-        if(!email || !password) {
-            return res.status(400).json({ error: 'Email and password are required '});
-        }
-
-        const user = await User.findOne({ email });
-        if(!user) {
-            return res.status(404).json({ error: 'User not found with this Email' });
-        }
-
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-        if(!isPasswordValid) {
-            return res.status(401).json({ error:'Wrong password'});
-        }
-
-        const token = jwt.sign(
-            { userId: user._id, email: user.email },
-            process.env.JWT_SECRET,
-            { expiresIn: '1h'}
-        );
-        console.log("Generated Token: ", token);
-
-        res.status(200).json({ message: 'Login successfully', token });
+      console.log("User name at login:", user.userName);
+  
+      const token = jwt.sign(
+        { userId: user._id, email: user.email },
+        process.env.JWT_SECRET,
+        { expiresIn: '1h' }
+      );
+  
+      console.log('Generated Token:', token);
+  
+      res.status(200).json({
+        message: 'Login successfully',
+        token,
+        userName: user.userName
+      });
     } catch (err) {
-        console.log('Error during login:', err);
-        res.status(500).json({ error: 'Login failed', details: err.message });
+      console.log('Error during login:', err);
+      res.status(500).json({ error: 'Login failed', details: err.message });
     }
-});
+  });  
 
 
 // Delete a user

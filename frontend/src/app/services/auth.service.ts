@@ -23,16 +23,22 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem(this.TOKEN_KEY);
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem(this.TOKEN_KEY);
+    }
+    return null;
   }
 
   setUsername(name: string) {
-    localStorage.setItem(this.USER_KEY, name);
+    localStorage.setItem('user_name', name);
   }
-
+  
   getUsername(): string | null {
-    return localStorage.getItem(this.USER_KEY);
-  }
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('user_name');
+    }
+    return null;
+  }  
 
   isLoggedIn(): boolean {
     return !!this.getToken();

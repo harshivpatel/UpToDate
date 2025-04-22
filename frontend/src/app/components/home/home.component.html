@@ -1,69 +1,64 @@
 <div class="d-flex flex-column min-vh-100">
+  <!-- Main Layout -->
+  <div class="flex-grow-1 d-flex">
 
-    <!-- Navbar -->
-  
-  
-    <!-- Main Layout -->
-    <div class="flex-grow-1 d-flex">
-  
-      <!-- Left Sidebar -->
-      <div class="sidebar d-flex flex-column p-3 border-end">
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link fw-bold" data-bs-toggle="collapse" href="#categoryMenu" role="button">
-              Categories <i class="bi bi-caret-down-fill"></i>
-            </a>
-            <div class="collapse show" id="categoryMenu">
-              <ul class="nav flex-column ms-3">
-                <li class="nav-item"><a class="nav-link" (click)="fetchNewsByCategory('general')">General</a></li>
-                <li class="nav-item"><a class="nav-link" (click)="fetchNewsByCategory('sports')">Sports</a></li>
-                <li class="nav-item"><a class="nav-link" (click)="fetchNewsByCategory('technology')">Technology</a></li>
-                <li class="nav-item"><a class="nav-link" (click)="fetchNewsByCategory('health')">Health</a></li>
-                <li class="nav-item"><a class="nav-link" (click)="fetchNewsByCategory('science')">Science</a></li>
-                <li class="nav-item"><a class="nav-link" (click)="fetchNewsByCategory('business')">Business</a></li>
-                <li class="nav-item"><a class="nav-link" (click)="fetchNewsByCategory('entertainment')">Entertainment</a></li>
-              </ul>
-            </div>
-          </li>
-        </ul>
+    <!-- Left Sidebar -->
+    <div class="sidebar d-flex flex-column p-3 border-end">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link fw-bold" data-bs-toggle="collapse" href="#categoryMenu" role="button">
+            Categories <i class="bi bi-caret-down-fill"></i>
+          </a>
+          <div class="collapse show" id="categoryMenu">
+            <ul class="nav flex-column ms-3">
+              <li class="nav-item"><a class="nav-link" (click)="fetchNewsByCategory('general')">General</a></li>
+              <li class="nav-item"><a class="nav-link" (click)="fetchNewsByCategory('sports')">Sports</a></li>
+              <li class="nav-item"><a class="nav-link" (click)="fetchNewsByCategory('technology')">Technology</a></li>
+              <li class="nav-item"><a class="nav-link" (click)="fetchNewsByCategory('health')">Health</a></li>
+              <li class="nav-item"><a class="nav-link" (click)="fetchNewsByCategory('science')">Science</a></li>
+              <li class="nav-item"><a class="nav-link" (click)="fetchNewsByCategory('business')">Business</a></li>
+              <li class="nav-item"><a class="nav-link" (click)="fetchNewsByCategory('entertainment')">Entertainment</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content flex-grow-1 p-4" style="max-width: 850px; margin: 0 auto;">
+      <h3 class="mb-4">Top Headlines</h3>
+
+      <div *ngIf="newsArticles.length === 0">
+        <p>Loading news...</p>
       </div>
-  
-      <!-- Main Content -->
-      <div class="main-content flex-grow-1 p-4" style="max-width: 850px; margin: 0 auto;">
-        <h3 class="mb-4">Top Headlines</h3>
-  
-        <div *ngIf="newsArticles.length === 0">
-          <p>Loading news...</p>
-        </div>
-  
-        <div *ngFor="let article of newsArticles" class="mb-4 p-3 border rounded shadow-sm bg-light">
-          <h5>{{ article.title }}</h5>
-          <img *ngIf="article.urlToImage" [src]="article.urlToImage" class="img-fluid rounded mb-2" alt="news image" />
-          <p>{{ article.description }}</p>
-          <a [href]="article.url" target="_blank" class="btn btn-sm btn-primary me-2">Read More</a>
-          <button class="btn btn-sm btn-outline-warning me-2" (click)="toggleBookmark(article)">
-            <i class="bi bi-bookmark"></i> Bookmark
-          </button>
-          <button class="btn btn-sm btn-outline-secondary me-1" (click)="shareLink('whatsapp', article.url)">
-            <i class="bi bi-whatsapp"></i>
-          </button>
-          <button class="btn btn-sm btn-outline-secondary me-1" (click)="shareLink('facebook', article.url)">
-            <i class="bi bi-facebook"></i>
-          </button>
-          <button class="btn btn-sm btn-outline-secondary" (click)="copyToClipboard(article.url)">
-            <i class="bi bi-link-45deg"></i>
-          </button>
-        </div>
-      </div>
-  
-      <!-- Right Sidebar -->
-      <div class="sidebar d-flex flex-column p-3 border-start">
-        <ul class="nav flex-column">
-          <li class="nav-item"><a class="nav-link fw-bold" href="#">Saved Stories</a></li>
-          <li class="nav-item"><a class="nav-link" [routerLink]="'/my-account'">My Account</a>
-          <li class="nav-item"><a class="nav-link" [routerLink]="'/about-us'">About Us</a>
-        </ul>
+
+      <div *ngFor="let article of newsArticles" class="news-card mb-4 p-3 border rounded shadow-sm">
+        <h5>{{ article.title }}</h5>
+        <img *ngIf="article.urlToImage" [src]="article.urlToImage" class="img-fluid rounded mb-2" alt="news image" />
+        <p>{{ article.description }}</p>
+        <a [href]="article.url" target="_blank" class="btn btn-sm btn-primary me-2">Read More</a>
+        <button class="btn btn-sm btn-outline-warning me-2" (click)="toggleBookmark(article)">
+          <i class="bi bi-bookmark"></i> Bookmark
+        </button>
+        <button class="btn btn-sm btn-outline-secondary me-1" (click)="shareLink('whatsapp', article.url)">
+          <i class="bi bi-whatsapp"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-secondary me-1" (click)="shareLink('facebook', article.url)">
+          <i class="bi bi-facebook"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-secondary" (click)="copyToClipboard(article.url)">
+          <i class="bi bi-link-45deg"></i>
+        </button>
       </div>
     </div>
+
+    <!-- Right Sidebar -->
+    <div class="sidebar d-flex flex-column p-3 border-start">
+      <ul class="nav flex-column">
+        <li class="nav-item"><a class="nav-link fw-bold" href="#">Saved Stories</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="'/my-account'">My Account</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="'/about-us'">About Us</a></li>
+      </ul>
+    </div>
   </div>
-  
+</div>
