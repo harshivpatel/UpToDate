@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+/*const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 module.exports = function (req, res, next) {
@@ -16,4 +16,4 @@ module.exports = function (req, res, next) {
     } catch (err) {
         res.status(403).json({error: 'Invalid or expired token' });
     }
-}
+}*/

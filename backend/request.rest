@@ -3,17 +3,17 @@ POST http://localhost:5000/api/users/register
 Content-Type: application/json
 
 {
-    "userName": "swfdns",
-    "email": "bsdfgmail.com",
-    "password": "BFdasfh344" 
+    "userName": "John",
+    "email": "John@gmail.com",
+    "password": "John@123" 
 }
 ### Login the existing User
 POST http://localhost:5000/api/users/login
 Content-Type: application/json
 
 {
-    "email": "abhi@gmail.com",
-    "password": "Hero223"
+    "email": "John@gmail.com",
+    "password": "John@123"
 }
 
 ### Delete the existing the User
