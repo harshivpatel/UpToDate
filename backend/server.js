@@ -34,6 +34,10 @@ app.use('/api/users', require('./routes/userRoutes')); // User routes (registrat
 app.use('/api/user-data', require('./routes/userDataRoutes')); // UserData routes (bookmarks, preferences, etc.)
 app.use('/api/news', require('./routes/newsRoutes')); // News routes
 
+
+
+
+
 // Render the index page
 app.get('/', (req, res) => {
     res.render('index', { username: 'Virat Kohli'});
