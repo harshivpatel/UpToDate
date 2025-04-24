@@ -55,7 +55,9 @@
     <!-- Right Sidebar -->
     <div class="sidebar d-flex flex-column p-3 border-start">
       <ul class="nav flex-column">
-        <li class="nav-item"><a class="nav-link fw-bold" href="#">Bookmarks</a></li>
+        <li class="nav-item">
+          <a class="nav-link fw-bold" [routerLink]="'/bookmarks'">Bookmarks</a>
+        </li>        
         <li class="nav-item"><a class="nav-link" [routerLink]="'/my-account'">My Account</a></li>
         <li class="nav-item"><a class="nav-link" [routerLink]="'/about-us'">About Us</a></li>
       </ul>

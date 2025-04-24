@@ -3,12 +3,17 @@
   <!-- Main Layout -->
   <div class="flex-grow-1 d-flex">
 
-    <!-- Left Sidebar -->
+    <!-- Left Sidebar (Categories) -->
     <div class="sidebar d-flex flex-column p-3 border-end">
+      <h6 class="fw-bold mb-3">Categories</h6>
       <ul class="nav flex-column">
-        <li class="nav-item"><a class="nav-link fw-bold" [routerLink]="['/']">Home</a></li>
-        <li class="nav-item"><a class="nav-link fw-bold" [routerLink]="['/my-account']">My Account</a></li>
-        <li class="nav-item"><a class="nav-link fw-bold" [routerLink]="['/about-us']">About Us</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="'/'">General</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="'/category/sports'">Sports</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="'/category/technology'">Technology</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="'/category/health'">Health</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="'/category/science'">Science</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="'/category/business'">Business</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="'/category/entertainment'">Entertainment</a></li>
       </ul>
     </div>
 
@@ -21,35 +26,34 @@
         You must be <a routerLink="/login" class="fw-bold text-decoration-underline">signed in</a> to view bookmarks.
       </div>
 
-      <!-- If no bookmarks -->
+      <!-- No bookmarks -->
       <div *ngIf="isLoggedIn && bookmarks.length === 0" class="text-center text-muted">
         You have no bookmarks yet.
       </div>
 
-      <!-- Show bookmarks -->
-      <div *ngIf="isLoggedIn && bookmarks.length > 0">
-        <div
-          *ngFor="let article of bookmarks"
-          class="news-card mb-4 p-3 rounded shadow-sm"
-          [ngClass]="{ 'bg-light text-dark': !isDarkMode, 'bg-dark text-light': isDarkMode }"
-        >
-          <h5 class="fw-bold mb-2">{{ article.title }}</h5>
-          <img *ngIf="article.urlToImage" [src]="article.urlToImage" class="img-fluid rounded mb-2" alt="news image" />
-          <p>{{ article.description }}</p>
-          <a [href]="article.url" target="_blank" class="btn btn-sm btn-primary me-2">Read More</a>
-          <button class="btn btn-sm btn-outline-danger" (click)="removeBookmark(article)">
-            <i class="bi bi-bookmark-dash"></i> Remove
-          </button>
-        </div>
+      <!-- Bookmark cards -->
+      <div
+        *ngFor="let article of bookmarks"
+        class="mb-4 p-3 border rounded shadow-sm"
+        [ngClass]="{ 'bg-light text-dark': !isDarkMode, 'bg-dark text-light': isDarkMode }"
+      >
+        <h5>{{ article.title }}</h5>
+        <img *ngIf="article.urlToImage" [src]="article.urlToImage" class="img-fluid rounded mb-2" alt="news image" />
+        <p>{{ article.description }}</p>
+        <a [href]="article.url" target="_blank" class="btn btn-sm btn-primary me-2">Read More</a>
+        <button class="btn btn-sm btn-outline-danger" (click)="removeBookmark(article)">
+          <i class="bi bi-bookmark-dash"></i> Remove
+        </button>
       </div>
     </div>
 
     <!-- Right Sidebar -->
     <div class="sidebar d-flex flex-column p-3 border-start">
+      <h6 class="fw-bold mb-3">Bookmarks</h6>
       <ul class="nav flex-column">
-        <li class="nav-item"><a class="nav-link fw-bold" [routerLink]="['/search']">Search</a></li>
-        <li class="nav-item"><a class="nav-link fw-bold" [routerLink]="['/my-account']">My Account</a></li>
-        <li class="nav-item"><a class="nav-link fw-bold" [routerLink]="['/about-us']">About Us</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="'/bookmarks'">Bookmarks</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="'/my-account'">My Account</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="'/about-us'">About Us</a></li>
       </ul>
     </div>
 
