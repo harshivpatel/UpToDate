@@ -29,7 +29,9 @@ export class SignInComponent {
     this.userName = '';
   }
 
-  onSubmit(): void {
+  onSubmit(event?: Event): void {
+    event?.preventDefault();
+  
     if (!this.email || !this.password || (!this.isLoginMode && !this.userName)) {
       alert('Please fill in all required fields.');
       return;
@@ -47,9 +49,7 @@ export class SignInComponent {
           alert(msg);
         }
       });
-    }
-    
-    else {
+    } else {
       this.authService.register({
         userName: this.userName,
         email: this.email,
@@ -66,5 +66,6 @@ export class SignInComponent {
       });
     }
   }
+  
   
 }

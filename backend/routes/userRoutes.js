@@ -2,8 +2,42 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const { ensureUserDataExists } = require('./userDataRoutes');
 
-// ✅ Login
+// Register
+router.post('/register', async (req, res) => {
+  try {
+    const { userName, email, password } = req.body;
+    if (!userName || !email || !password) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    const existingUser = await User.findOne({ $or: [{ email }, { userName }] });
+    if (existingUser) {
+      return res.status(400).json({ error: 'User already exists' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({ userName, email, password: hashedPassword });
+    await newUser.save();
+
+    // Create UserData document
+    await ensureUserDataExists(userName, newUser._id);
+
+    // Save session
+    req.session.user = {
+      userName,
+      id: newUser._id
+    };
+
+    res.status(201).json({ message: 'User registered successfully', userName });
+  } catch (err) {
+    console.error('Registration error:', err);
+    res.status(500).json({ error: 'Registration failed', details: err.message });
+  }
+});
+
+// Login
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -34,7 +68,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// ✅ Logout
+// Logout
 router.get('/logout', (req, res) => {
   req.session.destroy(() => {
     res.clearCookie('connect.sid');
@@ -42,7 +76,7 @@ router.get('/logout', (req, res) => {
   });
 });
 
-// ✅ Me (Session-based)
+// Check current user
 router.get('/me', (req, res) => {
   if (!req.session.user) {
     return res.status(401).json({ error: 'Unauthorized' });
@@ -51,7 +85,7 @@ router.get('/me', (req, res) => {
   res.status(200).json({ userName: req.session.user.userName });
 });
 
-// ✅ Delete User
+// Delete user
 router.delete('/delete/:userName', async (req, res) => {
   try {
     const { userName } = req.params;
@@ -62,7 +96,7 @@ router.delete('/delete/:userName', async (req, res) => {
 
     res.status(200).json({ message: 'User deleted successfully', deletedUser });
   } catch (err) {
-    console.error('Error deleting the user', err);
+    console.error('Delete user error:', err);
     res.status(500).json({ error: 'Failed to delete user', details: err.message });
   }
 });

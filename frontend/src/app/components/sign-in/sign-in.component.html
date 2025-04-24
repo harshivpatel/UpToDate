@@ -29,7 +29,7 @@
           {{ isLoginMode ? 'Sign in to your account' : 'Sign up your account' }}
         </p>
 
-        <form (ngSubmit)="onSubmit()" autocomplete="off">
+        <form (ngSubmit)="onSubmit($event)" autocomplete="off">
           <!-- Username Field -->
           <div class="mb-3" *ngIf="!isLoginMode">
             <div class="input-group">

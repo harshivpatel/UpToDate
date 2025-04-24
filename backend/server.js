@@ -12,24 +12,25 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: 'http://localhost:4200',
-    credentials: true
-  }));
+  origin: 'http://localhost:4200',
+  credentials: true
+}));
+
 app.use(bodyParser.json());
 app.use(cookieParser());
 
 // Session Middleware
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'secret-key',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      httpOnly: true,
-      secure: false, // true if using HTTPS
-      sameSite: 'Lax',
-      maxAge: 2 * 60 * 60 * 1000 // 2 hours
-    }
-  }));
+  secret: process.env.SESSION_SECRET || 'secret-key',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    secure: false, // set to true if using HTTPS
+    sameSite: 'Lax',
+    maxAge: 2 * 60 * 60 * 1000 // 2 hours
+  }
+}));
 
 // Set up EJS as the templating engine
 app.set('view engine', 'ejs');
@@ -39,18 +40,21 @@ app.set('views', './views');
 connectDB();
 
 // Routes
-app.use('/api/users', require('./routes/userRoutes')); 
-app.use('/api/userdata', require('./routes/userDataRoutes'));
-app.use('/api/news', require('./routes/newsRoutes')); 
+app.use('/api/users', require('./routes/userRoutes'));
+
+const { router: userDataRouter } = require('./routes/userDataRoutes');
+app.use('/api/userdata', userDataRouter);
+
+app.use('/api/news', require('./routes/newsRoutes'));
 
 // Render the index page
 app.get('/', (req, res) => {
-    res.render('index', { username: 'Virat Kohli' });
+  res.render('index', { username: 'Virat Kohli' });
 });
 
 // Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`✅ Server is running on port ${PORT}`);
-    console.log(`🌍 Access API at: http://localhost:${PORT}/api/news`);
+  console.log(`✅ Server is running on port ${PORT}`);
+  console.log(`🌍 Access API at: http://localhost:${PORT}/api/news`);
 });

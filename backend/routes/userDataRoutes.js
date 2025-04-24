@@ -2,12 +2,11 @@ const express = require('express');
 const router = express.Router();
 const UserData = require('../models/UserData');
 const User = require('../models/User');
-const auth = require('../middleware/auth');
 
-
+// Ensure UserData exists for a user
 const ensureUserDataExists = async (userName, userId) => {
   if (!userName || !userId) {
-    throw new Error('Missing userName or userId in token payload');
+    throw new Error('Missing userName or userId in session');
   }
 
   let userData = await UserData.findOne({ userName });
@@ -16,31 +15,29 @@ const ensureUserDataExists = async (userName, userId) => {
       userId,
       userName,
       bookmarks: [],
-      preferences: {}
+      preferences: { theme: 'light', language: 'en' }
     });
     await userData.save();
   }
   return userData;
 };
 
+// Create UserData manually (optional API)
 router.post('/add', async (req, res) => {
   try {
     const { userName, bookmarks = [], preferences = {} } = req.body;
-
-    if (!userName) {
-      return res.status(400).json({ error: 'Username is required' });
-    }
+    if (!userName) return res.status(400).json({ error: 'Username is required' });
 
     const user = await User.findOne({ userName });
     if (!user) return res.status(404).json({ error: 'User not found' });
 
-    const existingData = await UserData.findOne({ userName });
-    if (existingData) return res.status(400).json({ error: 'UserData already exists' });
+    const existing = await UserData.findOne({ userName });
+    if (existing) return res.status(400).json({ error: 'UserData already exists' });
 
-    const userData = new UserData({ userId: user._id, userName, bookmarks, preferences });
-    await userData.save();
+    const newUserData = new UserData({ userId: user._id, userName, bookmarks, preferences });
+    await newUserData.save();
 
-    res.status(201).json({ message: 'UserData created', data: userData });
+    res.status(201).json({ message: 'UserData created', data: newUserData });
   } catch (err) {
     console.error('Add UserData error:', err);
     res.status(500).json({ error: 'Internal server error', details: err.message });
@@ -55,7 +52,7 @@ router.get('/userName/:userName', async (req, res) => {
 
     res.status(200).json(userData);
   } catch (err) {
-    console.error('Fetch UserData error:', err);
+    console.error('Fetch error:', err);
     res.status(500).json({ error: 'Failed to fetch data', details: err.message });
   }
 });
@@ -64,26 +61,24 @@ router.get('/userName/:userName', async (req, res) => {
 router.put('/update/:userName', async (req, res) => {
   try {
     const { bookmarks, preferences } = req.body;
-    const updateFields = {};
+    const update = {};
+    if (bookmarks !== undefined) update.bookmarks = bookmarks;
+    if (preferences !== undefined) update.preferences = preferences;
 
-    if (bookmarks !== undefined) updateFields.bookmarks = bookmarks;
-    if (preferences !== undefined) updateFields.preferences = preferences;
-
-    if (Object.keys(updateFields).length === 0) {
+    if (Object.keys(update).length === 0) {
       return res.status(400).json({ error: 'Nothing to update' });
     }
 
-    const updateData = await UserData.findOneAndUpdate(
+    const updated = await UserData.findOneAndUpdate(
       { userName: req.params.userName },
-      { $set: updateFields },
+      { $set: update },
       { new: true }
     );
 
-    if (!updateData) return res.status(404).json({ error: 'User data not found' });
-
-    res.status(200).json({ message: 'Data updated successfully', data: updateData });
+    if (!updated) return res.status(404).json({ error: 'User data not found' });
+    res.status(200).json({ message: 'Updated successfully', data: updated });
   } catch (err) {
-    console.error('Update UserData error:', err);
+    console.error('Update error:', err);
     res.status(500).json({ error: 'Internal server error', details: err.message });
   }
 });
@@ -94,28 +89,25 @@ router.delete('/delete/:userName', async (req, res) => {
     const deleted = await UserData.findOneAndDelete({ userName: req.params.userName });
     if (!deleted) return res.status(404).json({ error: 'User data not found' });
 
-    res.status(200).json({ message: 'UserData deleted', data: deleted });
+    res.status(200).json({ message: 'Deleted successfully', data: deleted });
   } catch (err) {
-    console.error('Delete UserData error:', err);
+    console.error('Delete error:', err);
     res.status(500).json({ error: 'Internal server error', details: err.message });
   }
 });
 
-// Add bookmark (auth required)
-router.post('/bookmark', auth, async (req, res) => {
-  const { article } = req.body;
-  const userName = req.user.userName;
-  const userId = req.user.id;
+// Add bookmark (session-based)
+router.post('/bookmark', async (req, res) => {
+  const user = req.session.user;
+  if (!user) return res.status(401).json({ error: 'Unauthorized' });
 
-  if (!article || !article.url) {
-    return res.status(400).json({ error: 'Valid article required' });
-  }
+  const { article } = req.body;
+  if (!article || !article.url) return res.status(400).json({ error: 'Valid article required' });
 
   try {
-    const userData = await ensureUserDataExists(userName, userId);
-
-    const alreadyExists = userData.bookmarks.some(b => b.url === article.url);
-    if (!alreadyExists) {
+    const userData = await ensureUserDataExists(user.userName, user.id);
+    const exists = userData.bookmarks.some(b => b.url === article.url);
+    if (!exists) {
       userData.bookmarks.push(article);
       await userData.save();
     }
@@ -127,12 +119,13 @@ router.post('/bookmark', auth, async (req, res) => {
   }
 });
 
-// Get Bookmark
-router.get('/bookmarks', auth, async (req, res) => {
-  const userName = req.user.userName;
+// Get bookmarks (session-based)
+router.get('/bookmarks', async (req, res) => {
+  const user = req.session.user;
+  if (!user) return res.status(401).json({ error: 'Unauthorized' });
 
   try {
-    const userData = await UserData.findOne({ userName });
+    const userData = await UserData.findOne({ userName: user.userName });
     if (!userData) return res.status(404).json({ error: 'User data not found' });
 
     res.status(200).json({ bookmarks: userData.bookmarks });
@@ -141,21 +134,17 @@ router.get('/bookmarks', auth, async (req, res) => {
   }
 });
 
+// Remove bookmark (session-based)
+router.post('/remove-bookmark', async (req, res) => {
+  const user = req.session.user;
+  if (!user) return res.status(401).json({ error: 'Unauthorized' });
 
-// Remove bookmark (auth required)
-router.post('/remove-bookmark', auth, async (req, res) => {
   const { article } = req.body;
-  const userName = req.user.userName;
-  const userId = req.user.id;
-
-  if (!article || !article.url) {
-    return res.status(400).json({ error: 'Valid article required' });
-  }
+  if (!article || !article.url) return res.status(400).json({ error: 'Valid article required' });
 
   try {
-    const userData = await ensureUserDataExists(userName, userId);
-
-    userData.bookmarks = userData.bookmarks.filter(item => item.url !== article.url);
+    const userData = await ensureUserDataExists(user.userName, user.id);
+    userData.bookmarks = userData.bookmarks.filter(b => b.url !== article.url);
     await userData.save();
 
     res.status(200).json({ message: 'Bookmark removed', bookmarks: userData.bookmarks });
@@ -165,4 +154,7 @@ router.post('/remove-bookmark', auth, async (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = {
+  router,
+  ensureUserDataExists
+};

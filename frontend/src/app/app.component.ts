@@ -22,25 +22,23 @@ export class AppComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.authService.getCurrentUser().subscribe({
-      next: (user) => {
-        this.isLoggedIn = true;
-        this.username = user.userName;
-      },
-      error: () => {
-        const localUsername = this.authService.getUsername();
-        if (localUsername) {
+    if (typeof window !== 'undefined') {
+      this.authService.getCurrentUser().subscribe({
+        next: (user) => {
           this.isLoggedIn = true;
-          this.username = localUsername;
-        } else {
+          this.username = user.userName;
+        },
+        error: () => {
           this.isLoggedIn = false;
           this.username = null;
+  
+          localStorage.removeItem('user_name');
+          localStorage.removeItem('auth_token');
         }
-      }
-    });
+      });
+    }
   }
   
-
   search(event: Event): void {
     event.preventDefault();
     if (this.searchText.trim()) {
