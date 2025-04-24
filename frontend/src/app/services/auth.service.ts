@@ -6,40 +6,22 @@ import { Observable } from 'rxjs';
 export class AuthService {
   private apiUrl = 'http://localhost:5000/api/users';
   private baseUrl = 'http://localhost:5000/api';
-  private TOKEN_KEY = 'auth_token';
-  private USER_KEY = 'user_name';
 
   constructor(private http: HttpClient) {}
 
-  // Token and Username Storage
-  getToken(): string | null {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      return localStorage.getItem(this.TOKEN_KEY);
-    }
-    return null;
-  }
-  
-  setToken(token: string): void {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.setItem(this.TOKEN_KEY, token);
-    }
-  }
-  
-
+  // Username storage (
   setUsername(name: string): void {
     if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.setItem(this.USER_KEY, name);
+      localStorage.setItem('user_name', name);
     }
   }
-  
 
   getUsername(): string | null {
     if (typeof window !== 'undefined' && window.localStorage) {
-      return localStorage.getItem(this.USER_KEY);
+      return localStorage.getItem('user_name');
     }
     return null;
   }
-  
 
   // Auth Methods
   register(data: { userName: string; email: string; password: string }): Observable<any> {
@@ -73,7 +55,7 @@ export class AuthService {
     });
   }
 
-  //Bookmarking Methods
+  // Bookmarking
   addBookmark(article: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/userdata/bookmark`, { article }, { withCredentials: true });
   }
@@ -87,8 +69,10 @@ export class AuthService {
       withCredentials: true
     });
   }
-  
+
   clearBookmarks(): Observable<any> {
-    return this.http.put(`${this.baseUrl}/userdata/update`, { bookmarks: [] }, { withCredentials: true });
+    const userName = this.getUsername();
+    if (!userName) throw new Error('Username not found in localStorage.');
+    return this.http.put(`${this.baseUrl}/userdata/update/${userName}`, { bookmarks: [] }, { withCredentials: true });
   }
 }

@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { NewsService } from '../../services/news.service';
 import { AuthService } from '../../services/auth.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-search',
@@ -18,6 +18,8 @@ export class SearchComponent implements OnInit {
   query: string = '';
   categories: string[] = ['General', 'Sports', 'Technology', 'Health', 'Science', 'Business', 'Entertainment'];
   isDarkMode: boolean = false;
+  isLoggedIn = false;
+  userName: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,13 +34,24 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Sync with dark mode toggle
     this.isDarkMode = document.body.classList.contains('dark-theme');
-
     const observer = new MutationObserver(() => {
       this.isDarkMode = document.body.classList.contains('dark-theme');
     });
-
     observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+    // Check session user
+    this.authService.getCurrentUser().subscribe({
+      next: (user) => {
+        this.isLoggedIn = true;
+        this.userName = user.userName;
+      },
+      error: () => {
+        this.isLoggedIn = false;
+        this.userName = null;
+      }
+    });
   }
 
   searchArticles(): void {
@@ -53,18 +66,17 @@ export class SearchComponent implements OnInit {
   }
 
   bookmarkArticle(article: any): void {
-    const token = this.authService.getToken();
-    const userName = this.authService.getUsername();
-
-    if (!token || !userName) {
+    if (!this.isLoggedIn || !this.userName) {
       alert('Please log in to bookmark articles.');
       return;
     }
 
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
-    this.http.post('http://localhost:5000/api/userdata/bookmark', { userName, article }, { headers }).subscribe({
-      next: () => alert('Article bookmarked!'),
+    this.http.post(
+      'http://localhost:5000/api/userdata/bookmark',
+      { article },
+      { withCredentials: true }
+    ).subscribe({
+      next: () => alert('Bookmarked!'),
       error: (err) => {
         console.error('Bookmarking failed:', err);
         alert('Failed to bookmark the article.');
