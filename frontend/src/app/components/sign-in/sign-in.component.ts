@@ -34,23 +34,22 @@ export class SignInComponent {
       alert('Please fill in all required fields.');
       return;
     }
-
+  
     if (this.isLoginMode) {
-      // Login
       this.authService.login({ email: this.email, password: this.password }).subscribe({
-        next: (res: any) => {
+        next: (res) => {
+          this.authService.setUsername(res.userName); 
           alert('Login successful');
-          this.authService.setToken(res.token);
-          this.authService.setUsername(res.userName);
-          this.router.navigate(['/']);
+          window.location.href = '/';
         },
         error: (err) => {
           const msg = err.error?.error || 'Login failed';
           alert(msg);
         }
       });
-    } else {
-      // Register
+    }
+    
+    else {
       this.authService.register({
         userName: this.userName,
         email: this.email,
@@ -67,4 +66,5 @@ export class SignInComponent {
       });
     }
   }
+  
 }

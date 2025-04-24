@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-bookmarks',
@@ -15,23 +15,39 @@ export class BookmarksComponent implements OnInit {
   bookmarks: any[] = [];
   isLoggedIn: boolean = false;
   isDarkMode: boolean = false;
+  username: string | null = null;
 
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.isLoggedIn = this.authService.isLoggedIn();
-    this.isDarkMode = document.body.classList.contains('dark-theme');
+    // Detect dark mode
+    this.isDarkMode = typeof document !== 'undefined' &&
+                      document.body.classList.contains('dark-theme');
 
-    if (this.isLoggedIn) {
-      this.authService.getBookmarks().subscribe({
-        next: (res) => {
-          this.bookmarks = res.bookmarks || [];
-        },
-        error: () => {
-          this.bookmarks = [];
-        }
-      });
-    }
+    // Check if user is logged in and load bookmarks
+    this.authService.getCurrentUser().subscribe({
+      next: (user) => {
+        this.isLoggedIn = true;
+        this.username = user.userName;
+        this.loadBookmarks();
+      },
+      error: () => {
+        this.isLoggedIn = false;
+        this.username = null;
+        this.bookmarks = [];
+      }
+    });
+  }
+
+  loadBookmarks(): void {
+    this.authService.getBookmarks().subscribe({
+      next: (res) => {
+        this.bookmarks = res.bookmarks || [];
+      },
+      error: () => {
+        this.bookmarks = [];
+      }
+    });
   }
 
   removeBookmark(bookmark: any): void {
@@ -43,5 +59,5 @@ export class BookmarksComponent implements OnInit {
         alert('Failed to remove bookmark');
       }
     });
-  }  
+  }
 }

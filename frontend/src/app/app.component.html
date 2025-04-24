@@ -35,7 +35,7 @@
     <!-- Right Side: User Info or Login -->
     <div class="d-flex align-items-center ms-auto">
       <!-- Show username when logged in -->
-      <div *ngIf="isLoggedIn; else showLogin" class="dropdown">
+      <div *ngIf="username; else showLogin" class="dropdown">
         <button
           class="btn btn-sm dropdown-toggle"
           [ngClass]="{ 'btn-outline-light': isDarkMode, 'btn-outline-dark': !isDarkMode }"
@@ -51,7 +51,7 @@
           <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
         </ul>
       </div>
-
+      
       <!-- Show login if not logged in -->
       <ng-template #showLogin>
         <a

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -11,61 +11,84 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  register(data: { userName: string; email: string; password: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, data);
-  }
-
-  login(data: { email: string; password: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, data);
-  }
-
-  setToken(token: string) {
-    localStorage.setItem(this.TOKEN_KEY, token);
-  }
-
+  // Token and Username Storage
   getToken(): string | null {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && window.localStorage) {
       return localStorage.getItem(this.TOKEN_KEY);
     }
     return null;
   }
-
-  setUsername(name: string) {
-    localStorage.setItem(this.USER_KEY, name);
+  
+  setToken(token: string): void {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem(this.TOKEN_KEY, token);
+    }
   }
+  
+
+  setUsername(name: string): void {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem(this.USER_KEY, name);
+    }
+  }
+  
 
   getUsername(): string | null {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && window.localStorage) {
       return localStorage.getItem(this.USER_KEY);
     }
     return null;
   }
-
-  isLoggedIn(): boolean {
-    return !!this.getToken();
-  }
-
-  logout() {
-    localStorage.removeItem(this.TOKEN_KEY);
-    localStorage.removeItem(this.USER_KEY);
-  }
-
-  // Bookmarking Methods
-  addBookmark(article: any): Observable<any> {
-    const token = this.getToken();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.post(`${this.baseUrl}/userdata/bookmark`, { article }, { headers });
-  }  
-
-  removeBookmark(article: any): Observable<any> {
-    const token = this.getToken();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.post(`${this.baseUrl}/userdata/remove-bookmark`, { article }, { headers });
-  }
   
 
+  // Auth Methods
+  register(data: { userName: string; email: string; password: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register`, data, { withCredentials: true });
+  }
+
+  login(data: { email: string; password: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/login`, data, { withCredentials: true });
+  }
+
+  logout(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/logout`, { withCredentials: true });
+  }
+
+  getCurrentUser(): Observable<{ userName: string }> {
+    return this.http.get<{ userName: string }>(`${this.apiUrl}/me`, { withCredentials: true });
+  }
+
+  isLoggedIn(): Observable<boolean> {
+    return new Observable<boolean>(observer => {
+      this.getCurrentUser().subscribe({
+        next: () => {
+          observer.next(true);
+          observer.complete();
+        },
+        error: () => {
+          observer.next(false);
+          observer.complete();
+        }
+      });
+    });
+  }
+
+  //Bookmarking Methods
+  addBookmark(article: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/userdata/bookmark`, { article }, { withCredentials: true });
+  }
+
+  removeBookmark(article: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/userdata/remove-bookmark`, { article }, { withCredentials: true });
+  }
+
   getBookmarks(): Observable<any> {
-    const userName = this.getUsername();
-    return this.http.get(`${this.baseUrl}/userdata/userName/${userName}`);
+    return this.http.get(`${this.baseUrl}/userdata/bookmarks`, {
+      withCredentials: true
+    });
+  }
+  
+  clearBookmarks(): Observable<any> {
+    return this.http.put(`${this.baseUrl}/userdata/update`, { bookmarks: [] }, { withCredentials: true });
   }
 }

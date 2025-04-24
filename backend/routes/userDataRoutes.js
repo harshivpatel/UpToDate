@@ -23,8 +23,6 @@ const ensureUserDataExists = async (userName, userId) => {
   return userData;
 };
 
-
-
 router.post('/add', async (req, res) => {
   try {
     const { userName, bookmarks = [], preferences = {} } = req.body;

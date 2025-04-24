@@ -1,25 +1,35 @@
 require('dotenv').config({ path: './.env' });
 
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const session = require('express-session');
 const connectDB = require('./config/db');
 
 // Create an Express app
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:4200',
+    credentials: true
+  }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 // Session Middleware
 app.use(session({
-    secret: 'secret-key',
+    secret: process.env.SESSION_SECRET || 'secret-key',
     resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }
-}));
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: false, // true if using HTTPS
+      sameSite: 'Lax',
+      maxAge: 2 * 60 * 60 * 1000 // 2 hours
+    }
+  }));
 
 // Set up EJS as the templating engine
 app.set('view engine', 'ejs');

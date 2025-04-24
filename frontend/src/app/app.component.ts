@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -12,7 +12,7 @@ import { AuthService } from './services/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, DoCheck {
+export class AppComponent implements OnInit {
   isDarkMode = false;
   title = 'UpToDate';
   searchText: string = '';
@@ -22,22 +22,24 @@ export class AppComponent implements OnInit, DoCheck {
   constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.isLoggedIn = this.authService.isLoggedIn();
-    this.username = this.authService.getUsername();
+    this.authService.getCurrentUser().subscribe({
+      next: (user) => {
+        this.isLoggedIn = true;
+        this.username = user.userName;
+      },
+      error: () => {
+        const localUsername = this.authService.getUsername();
+        if (localUsername) {
+          this.isLoggedIn = true;
+          this.username = localUsername;
+        } else {
+          this.isLoggedIn = false;
+          this.username = null;
+        }
+      }
+    });
   }
-
-  ngDoCheck(): void {
-    const token = this.authService.getToken();
-    const user = this.authService.getUsername();
-
-    if (token && user) {
-      this.isLoggedIn = true;
-      this.username = user;
-    } else {
-      this.isLoggedIn = false;
-      this.username = null;
-    }
-  }
+  
 
   search(event: Event): void {
     event.preventDefault();
@@ -47,9 +49,15 @@ export class AppComponent implements OnInit, DoCheck {
   }
 
   logout(): void {
-    this.authService.logout();
-    this.router.navigate(['/']);
-    this.isLoggedIn = false;
-    this.username = null;
+    this.authService.logout().subscribe({
+      next: () => {
+        this.isLoggedIn = false;
+        this.username = null;
+        this.router.navigate(['/']);
+      },
+      error: () => {
+        alert('Logout failed.');
+      }
+    });
   }
 }
