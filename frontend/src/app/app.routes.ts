@@ -10,7 +10,13 @@ export const routes: Routes = [
   { path: 'my-account', component: MyAccountComponent },
   { path: 'about-us', component: AboutUsComponent },
   {
+    path: 'bookmarks',
+    loadComponent: () => import('./components/bookmarks/bookmarks.component').then(m => m.BookmarksComponent)
+  }
+  ,
+  {
     path: 'search',
-    loadComponent: () => import('./components/search/search.component').then(m => m.SearchComponent)
-  }  
+    loadComponent: () =>
+      import('./components/search/search.component').then((m) => m.SearchComponent),
+  }
 ];

@@ -30,8 +30,8 @@ connectDB();
 
 // Routes
 app.use('/api/users', require('./routes/userRoutes')); 
-app.use('/api/userdatas', require('./routes/userDataRoutes')); 
-app.use('/api/news', require('./routes/newsRoutes'));  // ✅ Correctly mounted
+app.use('/api/userdata', require('./routes/userDataRoutes'));
+app.use('/api/news', require('./routes/newsRoutes')); 
 
 // Render the index page
 app.get('/', (req, res) => {

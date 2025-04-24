@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private apiUrl = 'http://localhost:5000/api/users';
+  private baseUrl = 'http://localhost:5000/api';
   private TOKEN_KEY = 'auth_token';
   private USER_KEY = 'user_name';
 
@@ -30,15 +31,15 @@ export class AuthService {
   }
 
   setUsername(name: string) {
-    localStorage.setItem('user_name', name);
+    localStorage.setItem(this.USER_KEY, name);
   }
-  
+
   getUsername(): string | null {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('user_name');
+      return localStorage.getItem(this.USER_KEY);
     }
     return null;
-  }  
+  }
 
   isLoggedIn(): boolean {
     return !!this.getToken();
@@ -47,5 +48,24 @@ export class AuthService {
   logout() {
     localStorage.removeItem(this.TOKEN_KEY);
     localStorage.removeItem(this.USER_KEY);
+  }
+
+  // Bookmarking Methods
+  addBookmark(article: any): Observable<any> {
+    const token = this.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post(`${this.baseUrl}/userdata/bookmark`, { article }, { headers });
+  }  
+
+  removeBookmark(article: any): Observable<any> {
+    const token = this.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post(`${this.baseUrl}/userdata/remove-bookmark`, { article }, { headers });
+  }
+  
+
+  getBookmarks(): Observable<any> {
+    const userName = this.getUsername();
+    return this.http.get(`${this.baseUrl}/userdata/userName/${userName}`);
   }
 }

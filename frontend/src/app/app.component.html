@@ -46,6 +46,9 @@
           {{ username }}
         </button>
         <ul class="dropdown-menu dropdown-menu-end">
+          <li><a class="dropdown-item" [routerLink]="'/bookmarks'">Bookmarks</a></li>
+          <li><a class="dropdown-item" [routerLink]="'/my-account'">My Account</a></li>
+          <li><hr class="dropdown-divider" /></li>
           <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
         </ul>
       </div>

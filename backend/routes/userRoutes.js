@@ -52,14 +52,15 @@ router.post('/login', async (req, res) => {
       if (!isPasswordValid) {
         return res.status(401).json({ error: 'Wrong password' });
       }
-
-      console.log("User name at login:", user.userName);
   
       const token = jwt.sign(
-        { userId: user._id, email: user.email },
+        {
+          id: user._id,
+          userName: user.userName
+        },
         process.env.JWT_SECRET,
-        { expiresIn: '1h' }
-      );
+        { expiresIn: '2h' }
+      );      
   
       console.log('Generated Token:', token);
   

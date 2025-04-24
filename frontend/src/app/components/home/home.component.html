@@ -37,9 +37,9 @@
         <img *ngIf="article.urlToImage" [src]="article.urlToImage" class="img-fluid rounded mb-2" alt="news image" />
         <p>{{ article.description }}</p>
         <a [href]="article.url" target="_blank" class="btn btn-sm btn-primary me-2">Read More</a>
-        <button class="btn btn-sm btn-outline-warning me-2" (click)="toggleBookmark(article)">
+        <button class="btn btn-sm btn-outline-warning me-2" (click)="bookmarkArticle(article)">
           <i class="bi bi-bookmark"></i> Bookmark
-        </button>
+        </button>        
         <button class="btn btn-sm btn-outline-secondary me-1" (click)="shareLink('whatsapp', article.url)">
           <i class="bi bi-whatsapp"></i>
         </button>
@@ -55,7 +55,7 @@
     <!-- Right Sidebar -->
     <div class="sidebar d-flex flex-column p-3 border-start">
       <ul class="nav flex-column">
-        <li class="nav-item"><a class="nav-link fw-bold" href="#">Saved Stories</a></li>
+        <li class="nav-item"><a class="nav-link fw-bold" href="#">Bookmarks</a></li>
         <li class="nav-item"><a class="nav-link" [routerLink]="'/my-account'">My Account</a></li>
         <li class="nav-item"><a class="nav-link" [routerLink]="'/about-us'">About Us</a></li>
       </ul>

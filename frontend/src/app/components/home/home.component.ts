@@ -3,6 +3,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,8 @@ export class HomeComponent implements OnInit {
   bookmarks: any[] = [];
   searchQuery: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
+
 
   ngOnInit(): void {
     this.fetchTopNews();
@@ -73,6 +75,20 @@ export class HomeComponent implements OnInit {
       alert('Link copied!');
     }).catch(err => {
       console.error('Failed to copy: ', err);
+    });
+  }
+  bookmarkArticle(article: any) {
+    if (!this.authService.isLoggedIn()) {
+      alert('Please login to bookmark articles.');
+      return;
+    }
+  
+    this.authService.addBookmark(article).subscribe({
+      next: () => alert('Bookmarked!'),
+      error: (err) => {
+        console.error('Bookmark error:', err);
+        alert('Bookmark failed');
+      }
     });
   }
 }
