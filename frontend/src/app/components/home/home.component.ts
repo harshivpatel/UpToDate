@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -17,12 +17,24 @@ export class HomeComponent implements OnInit {
   newsArticles: any[] = [];
   bookmarks: any[] = [];
   searchQuery: string = '';
+  category: string | null = null;
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
-
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.fetchTopNews();
+    this.route.params.subscribe(params => {
+      this.category = params['name'] || null;
+
+      if (this.category) {
+        this.fetchNewsByCategory(this.category);
+      } else {
+        this.fetchTopNews();
+      }
+    });
   }
 
   fetchTopNews(): void {
@@ -77,18 +89,21 @@ export class HomeComponent implements OnInit {
       console.error('Failed to copy: ', err);
     });
   }
+
   bookmarkArticle(article: any) {
-    if (!this.authService.isLoggedIn()) {
-      alert('Please login to bookmark articles.');
-      return;
-    }
-  
-    this.authService.addBookmark(article).subscribe({
-      next: () => alert('Bookmarked!'),
-      error: (err) => {
-        console.error('Bookmark error:', err);
-        alert('Bookmark failed');
+    this.authService.isLoggedIn().subscribe(isLogged => {
+      if (!isLogged) {
+        alert('Please login to bookmark articles.');
+        return;
       }
+
+      this.authService.addBookmark(article).subscribe({
+        next: () => alert('Bookmarked!'),
+        error: (err) => {
+          console.error('Bookmark error:', err);
+          alert('Bookmark failed');
+        }
+      });
     });
   }
 }
