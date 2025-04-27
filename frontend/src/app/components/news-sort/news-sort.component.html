@@ -1,0 +1,22 @@
+<div class="sort-container">
+    <h5>Filter Categories</h5>
+    <div class="categories">
+      <button 
+        *ngFor="let category of categories"
+        class="category-btn"
+        [class.selected]="isSelected(category)"
+        (click)="toggleCategory(category)">
+        {{ category }}
+      </button>
+    </div>
+  
+    <div class="sort-section mt-3">
+      <label for="sortSelect"><strong>Sort by:</strong></label>
+      <select class="form-select mt-1" (change)="changeSortOption($event)">
+        <option value="publishedAt">Latest</option>
+        <option value="popularity">Popularity</option>
+        <option value="relevancy">Relevancy</option>
+      </select>      
+    </div>
+  </div>
+  
