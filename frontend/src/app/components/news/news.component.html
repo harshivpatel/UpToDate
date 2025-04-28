@@ -1,7 +1,14 @@
-<div *ngFor="let article of newsArticles" class="news-card">
-    <img [src]="article.urlToImage" alt="News Image" class="news-img" />
-    <h2>{{ article.title }}</h2>
-    <p>{{ article.description }}</p>
-    <a [href]="article.url" target="_blank">Read More</a>
+<div class="p-3 border rounded shadow-sm" style="width: 100%;">
+  <h6 class="fw-bold">Filter News Categories</h6>
+  <div class="form-check" *ngFor="let category of categories">
+    <input 
+      class="form-check-input" 
+      type="checkbox" 
+      [value]="category"
+      (change)="toggleCategory(category)"
+      [checked]="selectedCategories.includes(category)">
+    <label class="form-check-label">
+      {{ category }}
+    </label>
   </div>
-  
+</div>

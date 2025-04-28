@@ -5,11 +5,12 @@ import { RouterModule, ActivatedRoute } from '@angular/router';
 import { NewsService } from '../../services/news.service';
 import { AuthService } from '../../services/auth.service';
 import { HttpClient } from '@angular/common/http';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, SidebarComponent],
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
@@ -34,7 +35,6 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Sync with dark mode toggle
     this.isDarkMode = document.body.classList.contains('dark-theme');
     const observer = new MutationObserver(() => {
       this.isDarkMode = document.body.classList.contains('dark-theme');
@@ -83,4 +83,8 @@ export class SearchComponent implements OnInit {
       }
     });
   }
+  onCategoriesChanged(categories: string[]): void {
+
+  }
+  
 }

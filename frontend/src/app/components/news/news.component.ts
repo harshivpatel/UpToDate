@@ -1,27 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { NewsService } from '../../services/news.service';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-news',
+  selector: 'app-news-sort',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './news.component.html',
-  styleUrls: ['./news.component.css']
+  templateUrl: './news-sort.component.html',
+  styleUrls: ['./news-sort.component.css']
 })
-export class NewsComponent implements OnInit {
-  newsArticles: any[] = [];
+export class NewsSortComponent {
+  categories = ['General', 'Sports', 'Technology', 'Health', 'Science', 'Business', 'Entertainment'];
+  selectedCategories: string[] = [];
 
-  constructor(private newsService: NewsService) {}
+  @Output() filterChange = new EventEmitter<string[]>();
 
-  ngOnInit(): void {
-    this.newsService.getNews().subscribe(
-      (data) => {
-        this.newsArticles = data.articles;
-      },
-      (error) => {
-        console.log('Error fetching news:', error);
-      }
-    );
+  toggleCategory(category: string) {
+    const index = this.selectedCategories.indexOf(category);
+    if (index > -1) {
+      this.selectedCategories.splice(index, 1);
+    } else {
+      this.selectedCategories.push(category);
+    }
+    this.filterChange.emit(this.selectedCategories);
   }
 }

@@ -18,6 +18,11 @@ export class HomeComponent implements OnInit {
   bookmarks: any[] = [];
   searchQuery: string = '';
   category: string | null = null;
+  categories: string[] = [];
+  availableCategories: string[] = ['General', 'Sports', 'Technology', 'Health', 'Science', 'Business', 'Entertainment'];
+  selectedCategories: string[] = [];
+
+
 
   constructor(
     private http: HttpClient,
@@ -106,4 +111,55 @@ export class HomeComponent implements OnInit {
       });
     });
   }
+  fetchFilteredNews(): void {
+    this.newsArticles = [];
+  
+    if (this.selectedCategories.length === 0) {
+      this.fetchTopNews();
+      return;
+    }
+  
+    const requests = this.selectedCategories.map(category => {
+      const url = `http://localhost:5000/api/news?category=${category.toLowerCase()}`;
+      return this.http.get<any>(url);
+    });
+  
+    Promise.all(requests.map(req => req.toPromise()))
+      .then(responses => {
+        const combinedArticles: any[] = [];
+        responses.forEach(response => {
+          if (response && response.articles) {
+            combinedArticles.push(...response.articles);
+          }
+        });
+        this.newsArticles = combinedArticles;
+      })
+      .catch(error => {
+        console.error('Error fetching multi-category news:', error);
+      });
+  }
+  
+  onCategoryFilterChange(selected: string[]): void {
+    this.selectedCategories = selected;
+    this.fetchFilteredNews();
+  }
+
+  onCategoryToggle(category: string, event: Event): void {
+    const checkbox = event.target as HTMLInputElement;
+    
+    if (checkbox.checked) {
+      this.selectedCategories.push(category);
+    } else {
+      this.selectedCategories = this.selectedCategories.filter(c => c !== category);
+    }
+    
+    this.fetchFilteredNews();
+  }
+
+  onCategoriesChanged(selected: string[]): void {
+    this.selectedCategories = selected;
+    this.fetchFilteredNews();
+  }
+  
+  
 }

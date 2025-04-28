@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
   selector: 'app-bookmarks',
   standalone: true,
-  imports: [CommonModule, RouterModule, HttpClientModule],
+  imports: [CommonModule, RouterModule, HttpClientModule, SidebarComponent],
   templateUrl: './bookmarks.component.html',
   styleUrls: ['./bookmarks.component.css']
 })
@@ -20,11 +21,9 @@ export class BookmarksComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    // Detect dark mode
     this.isDarkMode = typeof document !== 'undefined' &&
                       document.body.classList.contains('dark-theme');
 
-    // Check if user is logged in and load bookmarks
     this.authService.getCurrentUser().subscribe({
       next: (user) => {
         this.isLoggedIn = true;
@@ -59,5 +58,8 @@ export class BookmarksComponent implements OnInit {
         alert('Failed to remove bookmark');
       }
     });
+  }
+  onCategoriesChanged(categories: string[]): void {
+    
   }
 }

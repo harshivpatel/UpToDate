@@ -4,17 +4,8 @@
     <div class="flex-grow-1 d-flex">
   
       <!-- Left Sidebar -->
-      <div class="sidebar d-flex flex-column">
-        <ul class="nav flex-column">
-          <li class="nav-item"><a class="nav-link" href="#">General</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Sports</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Technology</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Health</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Science</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Business</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Entertainment</a></li>
-        </ul>
-      </div>
+      <app-sidebar (categoriesChanged)="onCategoriesChanged($event)"></app-sidebar>
+
   
       <!-- Left Separator -->
       <div class="separator"></div>

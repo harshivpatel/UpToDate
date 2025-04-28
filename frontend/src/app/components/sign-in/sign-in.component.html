@@ -3,17 +3,8 @@
   <div class="flex-grow-1 d-flex">
 
     <!-- Left Sidebar -->
-    <div class="sidebar d-flex flex-column">
-      <ul class="nav flex-column">
-        <li class="nav-item"><a class="nav-link" [routerLink]="'/category/general'">General</a></li>
-        <li class="nav-item"><a class="nav-link" [routerLink]="'/category/sports'">Sports</a></li>
-        <li class="nav-item"><a class="nav-link" [routerLink]="'/category/technology'">Technology</a></li>
-        <li class="nav-item"><a class="nav-link" [routerLink]="'/category/health'">Health</a></li>
-        <li class="nav-item"><a class="nav-link" [routerLink]="'/category/science'">Science</a></li>
-        <li class="nav-item"><a class="nav-link" [routerLink]="'/category/business'">Business</a></li>
-        <li class="nav-item"><a class="nav-link" [routerLink]="'/category/entertainment'">Entertainment</a></li>
-      </ul>
-    </div>
+    <app-sidebar (categoriesChanged)="onCategoriesChanged($event)"></app-sidebar>
+
 
     <!-- Left Separator -->
     <div class="separator"></div>

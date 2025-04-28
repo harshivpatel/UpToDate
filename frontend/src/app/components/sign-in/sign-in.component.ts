@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, SidebarComponent],
   templateUrl: './sign-in.component.html',
 })
 export class SignInComponent {
@@ -66,6 +67,8 @@ export class SignInComponent {
       });
     }
   }
-  
+  onCategoriesChanged(categories: string[]): void {
+    
+  }
   
 }
