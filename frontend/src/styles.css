@@ -1,20 +1,47 @@
-/* Global Fonts & Transition */
+/* =================== GLOBAL LIGHT THEME =================== */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
+  background-color: #ffffff;
+  color: #000000;
 }
 
-/* ========== SIDEBAR ========== */
+.navbar {
+  background-color: #f8f9fa !important;
+  color: #000 !important;
+}
+.navbar .navbar-brand span,
+.navbar .nav-link {
+  color: #000 !important;
+}
+.navbar .nav-link:hover {
+  color: #007bff !important;
+}
+.navbar .btn-outline-success {
+  color: #000;
+  border-color: #666;
+}
+.navbar .btn-outline-success:hover {
+  background-color: #e2e6ea;
+}
+
 .sidebar {
   width: 200px;
   padding: 15px;
+  background-color: #ffffff;
+  border-right: 1px solid #ccc;
   user-select: none;
 }
-
 .separator {
   border-left: 2px solid #ccc;
-  height: auto;
   align-self: stretch;
+}
+
+.nav-link {
+  color: #000;
+}
+.nav-link:hover {
+  color: #007bff;
 }
 
 .main-content {
@@ -23,27 +50,27 @@ body {
   padding: 20px;
 }
 
-/* ========== LIGHT MODE ========== */
-
-/* Navbar */
-.navbar {
-  background-color: #f8f9fa !important;
-  color: #000 !important;
-  transition: background-color 0.3s ease, color 0.3s ease;
+.news-card {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #ddd;
 }
 
-/* Navbar Brand & Links */
-.navbar .navbar-brand span,
-.navbar .nav-link {
-  color: #000 !important;
-  font-weight: bold;
-  transition: color 0.3s ease;
+.alert-warning {
+  background-color: #fff3cd;
+  color: #856404;
 }
-.navbar .nav-link:hover {
+
+a {
+  color: #007bff;
+}
+a:hover {
+  color: #0056b3;
+}
+.text-primary {
   color: #007bff !important;
 }
 
-/* Form Elements */
 input.form-control:focus,
 textarea.form-control,
 select.form-control {
@@ -52,24 +79,12 @@ select.form-control {
   border: 1px solid #ccc;
 }
 
-/* News Cards */
-.news-card {
-  background-color: #ffffff;
-  color: #000000;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* ========== DARK MODE ========== */
+/* =================== GLOBAL DARK THEME =================== */
 body.dark-theme {
   background-color: #1f1f1f;
   color: #f5f5f5;
 }
 
-body.dark-mode ::selection {
-  background-color: #1f1f1f; /* Navy Blue */
-  color: white;              /* Keep text readable */
-}
-/* Navbar Dark */
 body.dark-theme .navbar {
   background-color: #1f1f1f !important;
   color: #f5f5f5 !important;
@@ -79,14 +94,11 @@ body.dark-theme .navbar .nav-link {
   color: #f5f5f5 !important;
 }
 body.dark-theme .navbar .nav-link:hover {
-  color: #00bfff !important;
+  color: #66b2ff !important;
 }
 body.dark-theme .navbar .btn-outline-success {
   color: #f5f5f5;
   border-color: #666;
-}
-body.dark-theme .navbar .btn-outline-success:hover {
-  background-color: #333;
 }
 body.dark-theme .navbar input {
   background-color: #2a2a2a;
@@ -94,10 +106,9 @@ body.dark-theme .navbar input {
   border: 1px solid #555;
 }
 
-/* Sidebar Dark */
 body.dark-theme .sidebar {
   background-color: #1f1f1f;
-  border-right: 1px solid #333;
+  border-right: 1px solid #444;
 }
 body.dark-theme .separator {
   border-left: 2px solid #444;
@@ -106,30 +117,38 @@ body.dark-theme .nav-link {
   color: #f0f0f0;
 }
 body.dark-theme .nav-link:hover {
-  color: #00bfff;
+  color: #66b2ff;
 }
 
-/* Form Elements Dark */
-body.dark-theme input,
-body.dark-theme textarea,
-body.dark-theme select {
-  background-color: #2a2a2a;
+body.dark-theme .main-content {
+  color: #f5f5f5;
+}
+
+body.dark-theme .news-card {
+  background-color: #1e1e1e;
   color: #f0f0f0;
-  border: 1px solid #555;
+  border: 1px solid #444;
 }
-body.dark-theme .form-control {
-  background-color: #2a2a2a;
-  color: #ffffff;
-  border: 1px solid #555;
-}
-
-/* Placeholder text */
-body.dark-theme input::placeholder,
-body.dark-theme textarea::placeholder {
-  color: #cccccc;
+body.dark-theme .news-card h5,
+body.dark-theme .news-card p {
+  color: #f0f0f0;
 }
 
-/* Buttons */
+body.dark-theme .alert-warning {
+  background-color: #5c5c00;
+  color: #f9f871;
+}
+
+body.dark-theme a {
+  color: #66b2ff;
+}
+body.dark-theme a:hover {
+  color: #99ccff;
+}
+body.dark-theme .text-primary {
+  color: #66b2ff !important;
+}
+
 body.dark-theme .btn {
   color: #fff;
   border-color: #666;
@@ -138,45 +157,30 @@ body.dark-theme .btn {
 body.dark-theme .btn:hover {
   background-color: #333;
 }
-body.dark-theme .btn-outline-dark {
-  color: #eee;
-  border-color: #777;
+body.dark-theme .btn-primary {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
 }
-body.dark-theme .btn-outline-secondary:hover {
-  background-color: #444;
-  color: #fff;
-}
-
-/* Headings */
-body.dark-theme h1,
-body.dark-theme h2,
-body.dark-theme h3,
-body.dark-theme h4,
-body.dark-theme h5,
-body.dark-theme h6 {
-  color: #f0f0f0;
+body.dark-theme .btn-primary:hover {
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
 }
 
-/* News Cards Dark */
-body.dark-theme .news-card {
-  background-color: #1e1e1e;
+body.dark-theme input,
+body.dark-theme textarea,
+body.dark-theme select {
+  background-color: #2a2a2a;
   color: #f0f0f0;
-  border-color: #333;
-}
-body.dark-theme .news-card h5,
-body.dark-theme .news-card p {
-  color: #f0f0f0;
-}
-body.dark-theme .news-card .btn-primary {
-  background-color: #007bff;
-  border-color: #007bff;
-}
-body.dark-theme .news-card .btn-outline-secondary {
-  border-color: #888;
-  color: #ccc;
+  border: 1px solid #555;
 }
 
-/* Utility form box */
+body.dark-theme input::placeholder,
+body.dark-theme textarea::placeholder,
+body.dark-theme .form-control::placeholder {
+  color: #cccccc !important;
+  opacity: 1 !important;
+}
+
 .theme-box {
   background-color: #ffffff;
   color: #000000;
@@ -186,29 +190,11 @@ body.dark-theme .theme-box {
   color: #f1f1f1;
 }
 
-/* Fix outline buttons in dark mode */
-body.dark-theme .btn-outline-dark {
-  color: #f0f0f0 !important;
-  border-color: #888 !important;
-}
-body.dark-theme .btn-outline-dark:hover {
-  background-color: #333 !important;
-  border-color: #aaa !important;
-  color: #fff !important;
-}
-body.dark-theme .btn-outline-secondary {
-  color: #f0f0f0 !important;
-  border-color: #888 !important;
-}
-body.dark-theme .btn-outline-secondary:hover {
-  background-color: #444 !important;
-  color: #fff !important;
+.text-muted {
+  color: #6c757d !important;
 }
 
-/* ✅ FINAL FIX for invisible placeholder in dark mode */
-body.dark-theme input::placeholder,
-body.dark-theme textarea::placeholder,
-body.dark-theme .form-control::placeholder {
+body.dark-theme .text-muted {
   color: #cccccc !important;
-  opacity: 1 !important;
 }
+
