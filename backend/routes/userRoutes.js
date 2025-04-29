@@ -1,16 +1,27 @@
 const express = require('express');
 const router = express.Router();
+const { body, validationResult } = require('express-validator');
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const { ensureUserDataExists } = require('./userDataRoutes');
 
 // Register
-router.post('/register', async (req, res) => {
+router.post('/register', [
+  body('userName').notEmpty().withMessage('Username is required'),
+  body('email').isEmail().withMessage('Valid email is required'),
+  body('password')
+    .isLength({ min: 8 }).withMessage('Password must be at least 8 characters long')
+    .matches(/[a-z]/).withMessage('Password must contain at least one lowercase letter')
+    .matches(/[A-Z]/).withMessage('Password must contain at least one uppercase letter')
+    .matches(/\d/).withMessage('Password must contain at least one number')
+], async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   try {
     const { userName, email, password } = req.body;
-    if (!userName || !email || !password) {
-      return res.status(400).json({ error: 'All fields are required' });
-    }
 
     const existingUser = await User.findOne({ $or: [{ email }, { userName }] });
     if (existingUser) {
@@ -38,7 +49,15 @@ router.post('/register', async (req, res) => {
 });
 
 // Login
-router.post('/login', async (req, res) => {
+router.post('/login', [
+  body('email').isEmail().withMessage('Valid email is required'),
+  body('password').notEmpty().withMessage('Password is required')
+], async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const { email, password } = req.body;
 
   try {
