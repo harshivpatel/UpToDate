@@ -13,6 +13,7 @@ export class SidebarComponent {
   selectedCategories: string[] = [];
 
   @Output() categoriesChanged = new EventEmitter<string[]>();
+  categorySelected: any;
 
   onCategoryToggle(category: string, event: Event) {
     const checkbox = event.target as HTMLInputElement;
@@ -24,5 +25,8 @@ export class SidebarComponent {
     }
 
     this.categoriesChanged.emit(this.selectedCategories);
+  }
+  toggleCategory(category: string) {
+    this.categorySelected.emit(category);
   }
 }

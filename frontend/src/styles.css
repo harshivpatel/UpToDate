@@ -1,4 +1,4 @@
-/* =================== GLOBAL LIGHT THEME =================== */
+/* ========== GLOBAL BASE ========== */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -6,6 +6,20 @@ body {
   color: #000000;
 }
 
+a {
+  color: #007bff;
+}
+a:hover {
+  color: #0056b3;
+}
+.text-primary {
+  color: #007bff !important;
+}
+.text-muted {
+  color: #6c757d !important;
+}
+
+/* ========== NAVBAR (LIGHT) ========== */
 .navbar {
   background-color: #f8f9fa !important;
   color: #000 !important;
@@ -25,6 +39,7 @@ body {
   background-color: #e2e6ea;
 }
 
+/* ========== SIDEBAR (LIGHT) ========== */
 .sidebar {
   width: 200px;
   padding: 15px;
@@ -32,18 +47,14 @@ body {
   border-right: 1px solid #ccc;
   user-select: none;
 }
+
 .separator {
   border-left: 2px solid #ccc;
+  height: 100%;
   align-self: stretch;
 }
 
-.nav-link {
-  color: #000;
-}
-.nav-link:hover {
-  color: #007bff;
-}
-
+/* ========== MAIN CONTENT (LIGHT) ========== */
 .main-content {
   max-width: 800px;
   margin: 0 auto;
@@ -56,21 +67,7 @@ body {
   border: 1px solid #ddd;
 }
 
-.alert-warning {
-  background-color: #fff3cd;
-  color: #856404;
-}
-
-a {
-  color: #007bff;
-}
-a:hover {
-  color: #0056b3;
-}
-.text-primary {
-  color: #007bff !important;
-}
-
+/* ========== FORMS ========== */
 input.form-control:focus,
 textarea.form-control,
 select.form-control {
@@ -79,7 +76,14 @@ select.form-control {
   border: 1px solid #ccc;
 }
 
-/* =================== GLOBAL DARK THEME =================== */
+/* ========== ALERT ========== */
+.alert-warning {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+/* ============================================================= */
+/* ========== DARK THEME OVERRIDES (CLASS: body.dark-theme) ========== */
 body.dark-theme {
   background-color: #1f1f1f;
   color: #f5f5f5;
@@ -106,12 +110,15 @@ body.dark-theme .navbar input {
   border: 1px solid #555;
 }
 
+/* Sidebar */
 body.dark-theme .sidebar {
   background-color: #1f1f1f;
   border-right: 1px solid #444;
 }
 body.dark-theme .separator {
   border-left: 2px solid #444;
+  height: 100%;
+  align-self: stretch;
 }
 body.dark-theme .nav-link {
   color: #f0f0f0;
@@ -120,10 +127,10 @@ body.dark-theme .nav-link:hover {
   color: #66b2ff;
 }
 
+/* Content */
 body.dark-theme .main-content {
   color: #f5f5f5;
 }
-
 body.dark-theme .news-card {
   background-color: #1e1e1e;
   color: #f0f0f0;
@@ -134,21 +141,22 @@ body.dark-theme .news-card p {
   color: #f0f0f0;
 }
 
-body.dark-theme .alert-warning {
-  background-color: #5c5c00;
-  color: #f9f871;
+/* Forms */
+body.dark-theme input,
+body.dark-theme textarea,
+body.dark-theme select {
+  background-color: #2a2a2a;
+  color: #f0f0f0;
+  border: 1px solid #555;
+}
+body.dark-theme .form-control::placeholder,
+body.dark-theme input::placeholder,
+body.dark-theme textarea::placeholder {
+  color: #cccccc !important;
+  opacity: 1 !important;
 }
 
-body.dark-theme a {
-  color: #66b2ff;
-}
-body.dark-theme a:hover {
-  color: #99ccff;
-}
-body.dark-theme .text-primary {
-  color: #66b2ff !important;
-}
-
+/* Buttons */
 body.dark-theme .btn {
   color: #fff;
   border-color: #666;
@@ -166,21 +174,13 @@ body.dark-theme .btn-primary:hover {
   border-color: #0a58ca;
 }
 
-body.dark-theme input,
-body.dark-theme textarea,
-body.dark-theme select {
-  background-color: #2a2a2a;
-  color: #f0f0f0;
-  border: 1px solid #555;
+/* Alert */
+body.dark-theme .alert-warning {
+  background-color: #5c5c00;
+  color: #f9f871;
 }
 
-body.dark-theme input::placeholder,
-body.dark-theme textarea::placeholder,
-body.dark-theme .form-control::placeholder {
-  color: #cccccc !important;
-  opacity: 1 !important;
-}
-
+/* Theme box */
 .theme-box {
   background-color: #ffffff;
   color: #000000;
@@ -190,11 +190,16 @@ body.dark-theme .theme-box {
   color: #f1f1f1;
 }
 
-.text-muted {
-  color: #6c757d !important;
+/* Links */
+body.dark-theme a {
+  color: #66b2ff;
 }
-
+body.dark-theme a:hover {
+  color: #99ccff;
+}
+body.dark-theme .text-primary {
+  color: #66b2ff !important;
+}
 body.dark-theme .text-muted {
   color: #cccccc !important;
 }
-
