@@ -86,5 +86,27 @@ export class SearchComponent implements OnInit {
   onCategoriesChanged(categories: string[]): void {
 
   }
+
+  shareLink(platform: string, url: string): void {
+    const links: { [key: string]: string } = {
+      whatsapp: `https://api.whatsapp.com/send?text=${encodeURIComponent(url)}`,
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`
+    };
+  
+    if (links[platform]) {
+      window.open(links[platform], '_blank');
+    } else {
+      console.warn('Unsupported platform');
+    }
+  }
+  
+  copyToClipboard(url: string): void {
+    navigator.clipboard.writeText(url).then(() => {
+      alert('Link copied!');
+    }).catch(err => {
+      console.error('Failed to copy: ', err);
+    });
+  }
+  
   
 }
