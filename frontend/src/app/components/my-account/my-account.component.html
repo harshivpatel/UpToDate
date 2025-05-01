@@ -22,11 +22,16 @@
     <div class="main-content flex-grow-1 px-4 py-3">
       <h4 class="form-label">Change Password</h4>
       
-      <form class="mb-4" *ngIf="isLoggedIn">
-        <div class="mb-3"><input type="password" class="form-control" placeholder="Current Password" /></div>
-        <div class="mb-3"><input type="password" class="form-control" placeholder="New Password" /></div>
+      <form class="mb-4" (ngSubmit)="changePassword()" *ngIf="isLoggedIn">
+        <div class="mb-3">
+          <input type="password" class="form-control" placeholder="Current Password" [(ngModel)]="currentPassword" name="currentPassword" />
+        </div>
+        <div class="mb-3">
+          <input type="password" class="form-control" placeholder="New Password" [(ngModel)]="newPassword" name="newPassword" />
+        </div>
         <button class="btn btn-outline-primary" type="submit">Confirm</button>
       </form>
+      
 
       <hr>
 
