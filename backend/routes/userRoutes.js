@@ -1,41 +1,40 @@
 const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
-const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const User = require('../models/User');
 const { ensureUserDataExists } = require('./userDataRoutes');
 
-// Register
+// Register Route
 router.post('/register', [
   body('userName').notEmpty().withMessage('Username is required'),
-  body('email').isEmail().withMessage('Valid email is required'),
+  body('email').isEmail().withMessage('A valid email is required'),
   body('password')
-    .isLength({ min: 8 }).withMessage('Password must be at least 8 characters long')
-    .matches(/[a-z]/).withMessage('Password must contain at least one lowercase letter')
-    .matches(/[A-Z]/).withMessage('Password must contain at least one uppercase letter')
-    .matches(/\d/).withMessage('Password must contain at least one number')
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/)
+    .withMessage('Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, and a number')
 ], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+    // Validation errors
+    return res.status(400).json({ error: errors.array()[0].msg });
   }
 
   try {
     const { userName, email, password } = req.body;
 
+    // Check for duplicate user
     const existingUser = await User.findOne({ $or: [{ email }, { userName }] });
     if (existingUser) {
-      return res.status(400).json({ error: 'User already exists' });
+      return res.status(409).json({ error: 'User already exists' });
     }
 
+    // Hash and save
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ userName, email, password: hashedPassword });
     await newUser.save();
 
-    // Create UserData document
     await ensureUserDataExists(userName, newUser._id);
 
-    // Save session
     req.session.user = {
       userName,
       id: newUser._id
@@ -48,24 +47,28 @@ router.post('/register', [
   }
 });
 
-// Login
+// Login Route
 router.post('/login', [
-  body('email').isEmail().withMessage('Valid email is required'),
+  body('email').isEmail().withMessage('Enter a valid email'),
   body('password').notEmpty().withMessage('Password is required')
 ], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+    return res.status(400).json({ error: errors.array()[0].msg });
   }
 
   const { email, password } = req.body;
 
   try {
     const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ error: 'User not found' });
+    if (!user) {
+      return res.status(401).json({ error: 'This email is not registered. Please sign up.' });
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(401).json({ error: 'Invalid credentials' });
+    if (!isMatch) {
+      return res.status(401).json({ error: 'Invalid password' });
+    }
 
     req.session.user = {
       userName: user.userName,

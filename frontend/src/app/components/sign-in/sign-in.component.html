@@ -28,7 +28,11 @@
           {{ isLoginMode ? 'Sign in to your account' : 'Sign up your account' }}
         </p>
 
-        <!-- Updated Form -->
+        <!-- Show backend error message -->
+        <div *ngIf="errorMessage" class="alert alert-danger text-center">
+          {{ errorMessage }}
+        </div>
+
         <form (ngSubmit)="onSubmit($event)" #signForm="ngForm" autocomplete="off">
 
           <!-- Username Field (only for register) -->
@@ -76,14 +80,14 @@
                 name="password"
                 placeholder="Enter your password"
                 required
-                minlength="6"
+                minlength="8"
                 #passwordField="ngModel"
               />
             </div>
             <div *ngIf="passwordField.invalid && passwordField.touched" class="text-danger">
               <div *ngIf="passwordField.errors?.['required']">Password is required.</div>
               <div *ngIf="passwordField.errors?.['minlength']">
-                Password must be at least 6 characters long.
+                Password must be at least 8 characters long.
               </div>
             </div>
           </div>
