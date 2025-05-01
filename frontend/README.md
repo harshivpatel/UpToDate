@@ -1,4 +1,4 @@
-# Frontend
+
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.5.
 
@@ -57,3 +57,22 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+---
+
+## 👥 Authors and Contributions
+
+This frontend application was developed collaboratively by the following team members as part of the BSc.(Hons)in Computing Science at Griffith College Cork:
+
+- **Saugat Pokharel** – UI Components, Routing, Bookmarks Feature
+- **Abhishek Das** – API Integration, Authentication Logic, Responsive Layout
+- **Harshiv Bharat Patel** – Home Page, Theming, Account Management
+
+All members contributed equally to the development, testing, and refinement of the Angular frontend.
+
+
+
+github link :
+https://github.com/harshivpatel/UpToDate.git
+
+
