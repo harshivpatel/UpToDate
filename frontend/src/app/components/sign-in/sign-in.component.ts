@@ -67,7 +67,7 @@ export class SignInComponent {
         error: (err) => {
           const msg = err.error?.error || 'Registration failed';
           if (msg.toLowerCase().includes('exists')) {
-            alert('User already exists');
+            alert('User with same email already exists');
           } else {
             this.errorMessage = msg;
           }

@@ -7,7 +7,8 @@ const { ensureUserDataExists } = require('./userDataRoutes');
 
 // Register Route
 router.post('/register', [
-  body('userName').notEmpty().withMessage('Username is required'),
+  body('userName').notEmpty().withMessage('Username is required')
+  .isLength({ max: 12 }).withMessage('Username cannot be more than 12 characters'),
   body('email').isEmail().withMessage('A valid email is required'),
   body('password')
     .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/)

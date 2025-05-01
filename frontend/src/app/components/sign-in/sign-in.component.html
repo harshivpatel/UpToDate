@@ -72,25 +72,30 @@
           </div>
 
           <!-- Password Field -->
-          <div class="mb-3">
-            <div class="input-group">
-              <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-              <input type="password" class="form-control"
-                [(ngModel)]="password"
-                name="password"
-                placeholder="Enter your password"
-                required
-                minlength="8"
-                #passwordField="ngModel"
-              />
-            </div>
-            <div *ngIf="passwordField.invalid && passwordField.touched" class="text-danger">
-              <div *ngIf="passwordField.errors?.['required']">Password is required.</div>
-              <div *ngIf="passwordField.errors?.['minlength']">
-                Password must be at least 8 characters long, at least one uppercase, one lowercase and one number.
-              </div>
-            </div>
-          </div>
+<div class="mb-3">
+  <div class="input-group">
+    <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+    <input type="password" class="form-control"
+      [(ngModel)]="password"
+      name="password"
+      placeholder="Enter your password"
+      required
+      [attr.minlength]="isLoginMode ? null : 8"
+      [attr.pattern]="isLoginMode ? null : '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$'"
+      #passwordField="ngModel"
+    />
+  </div>
+  <div *ngIf="passwordField.invalid && passwordField.touched" class="text-danger">
+    <div *ngIf="passwordField.errors?.['required']">Password is required.</div>
+    <div *ngIf="!isLoginMode && passwordField.errors?.['minlength']">
+      Password must be at least 8 characters long.
+    </div>
+    <div *ngIf="!isLoginMode && passwordField.errors?.['pattern']">
+      Password must include one uppercase letter, one lowercase letter, and one number.
+    </div>
+  </div>
+</div>
+
 
           <!-- Submit Button -->
           <button class="btn btn-success w-100" type="submit" [disabled]="signForm.invalid">
