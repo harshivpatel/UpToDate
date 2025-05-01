@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-my-account',
@@ -9,9 +10,23 @@ import { RouterModule } from '@angular/router';
   templateUrl: './my-account.component.html',
   styleUrls: ['./my-account.component.css']
 })
-export class MyAccountComponent {
+export class MyAccountComponent implements OnInit{
   
   isDarkMode = false;
+  isLoggedIn = false;
+
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.authService.getCurrentUser().subscribe({
+      next: () => {
+        this.isLoggedIn = true;
+      },
+      error: () => {
+        this.isLoggedIn = false;
+      }
+    });
+  }
 
   toggleDarkMode(): void {
     document.body.classList.toggle('dark-theme');
