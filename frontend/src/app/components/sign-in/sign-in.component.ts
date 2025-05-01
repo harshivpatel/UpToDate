@@ -15,38 +15,43 @@ export class SignInComponent {
   email: string = '';
   password: string = '';
   userName: string = '';
+  errorMessage: string = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
   toggleMode(): void {
     this.isLoginMode = !this.isLoginMode;
     this.clearForm();
+    this.errorMessage = '';
   }
 
   clearForm(): void {
     this.email = '';
     this.password = '';
     this.userName = '';
+    this.errorMessage = '';
   }
 
   onSubmit(event?: Event): void {
     event?.preventDefault();
-  
+
     if (!this.email || !this.password || (!this.isLoginMode && !this.userName)) {
-      alert('Please fill in all required fields.');
+      this.errorMessage = 'Please fill in all required fields.';
       return;
     }
-  
+
+    this.errorMessage = ''; // clear any previous errors
+
     if (this.isLoginMode) {
       this.authService.login({ email: this.email, password: this.password }).subscribe({
         next: (res) => {
-          this.authService.setUsername(res.userName); 
+          this.authService.setUsername(res.userName);
           alert('Login successful');
           window.location.href = '/';
         },
         error: (err) => {
           const msg = err.error?.error || 'Login failed';
-          alert(msg);
+          this.errorMessage = msg;
         }
       });
     } else {
@@ -61,11 +66,13 @@ export class SignInComponent {
         },
         error: (err) => {
           const msg = err.error?.error || 'Registration failed';
-          alert(msg);
+          if (msg.toLowerCase().includes('exists')) {
+            alert('User already exists');
+          } else {
+            this.errorMessage = msg;
+          }
         }
       });
     }
   }
-  
-  
 }
