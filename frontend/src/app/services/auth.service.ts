@@ -75,4 +75,10 @@ export class AuthService {
     if (!userName) throw new Error('Username not found in localStorage.');
     return this.http.put(`${this.baseUrl}/userdata/update/${userName}`, { bookmarks: [] }, { withCredentials: true });
   }
+
+  changePassword(data: { currentPassword: string, newPassword: string }): Observable<any> {
+    return this.http.post('http://localhost:5000/api/users/change-password', data, {
+      withCredentials: true
+    });
+  }
 }
