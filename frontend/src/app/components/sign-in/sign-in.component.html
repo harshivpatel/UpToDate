@@ -87,7 +87,7 @@
             <div *ngIf="passwordField.invalid && passwordField.touched" class="text-danger">
               <div *ngIf="passwordField.errors?.['required']">Password is required.</div>
               <div *ngIf="passwordField.errors?.['minlength']">
-                Password must be at least 8 characters long.
+                Password must be at least 8 characters long, at least one uppercase, one lowercase and one number.
               </div>
             </div>
           </div>
