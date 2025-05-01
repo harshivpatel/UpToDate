@@ -1,26 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-<<<<<<< HEAD
 import { SidebarComponent } from '../sidebar/sidebar.component';
-=======
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
->>>>>>> fix/validations-errorhandling
 
 @Component({
   selector: 'app-my-account',
   standalone: true,
-<<<<<<< HEAD
-  imports: [CommonModule, RouterModule,SidebarComponent],
-=======
-  imports: [CommonModule, RouterModule, FormsModule],
->>>>>>> fix/validations-errorhandling
+  imports: [CommonModule, RouterModule, SidebarComponent, FormsModule],
   templateUrl: './my-account.component.html',
   styleUrls: ['./my-account.component.css']
 })
-export class MyAccountComponent implements OnInit{
-  
+export class MyAccountComponent implements OnInit {
   isDarkMode = false;
   isLoggedIn = false;
   currentPassword: string = '';
@@ -49,7 +41,7 @@ export class MyAccountComponent implements OnInit{
         this.currentPassword = '';
         this.newPassword = '';
       },
-      error: err => {
+      error: (err: any) => {
         alert(err.error?.error || 'Failed to change password');
       }
     });
@@ -64,13 +56,13 @@ export class MyAccountComponent implements OnInit{
     document.body.classList.add('dark-theme');
     localStorage.setItem('theme', 'dark');
   }
-  
+
   setLightMode(): void {
     document.body.classList.remove('dark-theme');
     localStorage.setItem('theme', 'light');
   }
+
   onCategoriesChanged(categories: string[]): void {
-    
+    // To be implemented if needed
   }
-  
 }
