@@ -124,4 +124,65 @@ router.delete('/delete/:userName', async (req, res) => {
   }
 });
 
+
+
+
+
+const authMiddleware = require('../middleware/auth'); // Add this at the top if not already
+
+// Change Password Route
+router.post('/change-password', authMiddleware, async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+
+  console.log('Received password change request:', req.body);
+  console.log('Session user:', req.user);
+
+  if (!currentPassword || !newPassword) {
+    return res.status(400).json({ error: 'Both fields are required.' });
+  }
+
+  try {
+    const user = await User.findOne({ userName: req.user.userName });
+
+    if (!user) {
+      console.log('User not found:', req.user.userName);
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      console.log('Incorrect current password for:', user.userName);
+      return res.status(400).json({ error: 'Current password is incorrect' });
+    }
+
+    // Optional: enforce strong new password
+    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(newPassword)) {
+      return res.status(400).json({
+        error:
+          'New password must be at least 8 characters long and include an uppercase, lowercase, and number.'
+      });
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedNewPassword;
+    await user.save();
+
+    console.log('Password updated successfully for:', user.userName);
+    res.status(200).json({ message: 'Password updated successfully' });
+
+  } catch (err) {
+    console.error('Error in change-password:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+
+
+
+
+
+
+
+
+
 module.exports = router;
